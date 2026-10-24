@@ -27,3 +27,7 @@ Workflow GitHub Actions menjalankan regresi web/container dan native pada setiap
 ## Verifikasi GitHub Actions
 
 Run https://github.com/zorororonoa1946-del/aplikasi/actions/runs/40074751665 lulus untuk job web dan Android pada kode `114d9e892d6c858fd18e908beecbcaa5577be909`. Kegagalan setup KVM dan pencabutan izin saat instrumentasi telah diperbaiki. Commit setelah kode yang diuji hanya memperbarui dokumentasi/paket/laporan; workflow mengabaikan push yang hanya mengubah Markdown dan artifacts.
+
+## Docker LAN lokal
+
+Image `deployment/Dockerfile.local` dan `compose.yaml` root telah diuji: build berhasil, proses nonroot/read-only, HTTPS dengan verifikasi CA/hostname, penolakan token salah, backup terenkripsi dan dekripsi hasilnya berhasil. Setelah restart container, token/CA serta backup tetap dapat digunakan. Volume uji terpisah dibersihkan setelah pemeriksaan; tidak memakai data pengguna. Koneksi dari HP fisik melalui router/firewall pengguna tetap perlu dicoba pada jaringan pengguna.

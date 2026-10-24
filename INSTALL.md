@@ -11,6 +11,8 @@
 
 Rilis 1.1.0 memakai kunci yang sama dengan 1.0.0; instal di atas versi lama untuk mempertahankan data. Backup dahulu. APK rilis memiliki tanda tangan sendiri. Jika sebelumnya terpasang build debug, Android akan menolak penggantian karena tanda tangan berbeda. Backup dan pastikan bisa dipulihkan sebelum uninstall build lama.
 
+Untuk server Docker lokal, ikuti [langkah clone dan Docker Compose di README](README.md#server-lokal-dengan-docker-tanpa-nodeopenssl-di-komputer).
+
 ## 2. Tanpa VPS: relay lokal di laptop
 
 Pasang Node.js >=22 dan OpenSSL, hubungkan HP/laptop ke WiFi yang sama, lalu jalankan `npm run relay:local -- 192.168.1.10` (ganti dengan IP LAN laptop). Izinkan port TCP 3443 dari jaringan lokal. Baca alamat/token secara privat dari `.local/local-relay/connection.txt`. Impor hanya `ca.pem` ke Pengaturan relay Android dan setujui setelah mencocokkan fingerprint SHA-256 dengan laptop. Simpan kunci privat tetap di laptop.

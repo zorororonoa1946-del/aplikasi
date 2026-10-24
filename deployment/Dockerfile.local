@@ -1,0 +1,10 @@
+FROM node:24-bookworm@sha256:6449e19d8184d84062525b6a7524def03146c2cb04a7f08b076680d0e8e4240a
+WORKDIR /app
+COPY --chown=node:node package.json server.js ./
+COPY --chown=node:node public ./public
+COPY --chown=node:node scripts/relay-local.mjs ./scripts/relay-local.mjs
+RUN mkdir /data && chown node:node /data
+ENV NODE_ENV=production LOCAL_RELAY_DIR=/data
+USER node
+EXPOSE 3443
+ENTRYPOINT ["node", "scripts/relay-local.mjs"]

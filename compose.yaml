@@ -1,0 +1,22 @@
+services:
+  vault:
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile.local
+    command: ["${LAN_IP:?Set LAN_IP to the LAN IPv4 address of this computer}"]
+    ports:
+      - "3443:3443"
+    volumes:
+      - vault-local:/data
+    environment:
+      MAX_STORAGE_BYTES: ${MAX_STORAGE_BYTES:-10737418240}
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  vault-local:

@@ -3,3 +3,7 @@
 !server.js
 !public/
 !public/**
+!scripts/
+!scripts/relay-local.mjs
+!deployment/
+!deployment/Dockerfile.local

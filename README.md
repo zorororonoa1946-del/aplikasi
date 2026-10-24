@@ -10,6 +10,40 @@ Aplikasi Android native dan companion browser untuk vault pribadi serta backup s
 
 Mulai dari [panduan instalasi](INSTALL.md). Hasil pengujian dan batas verifikasinya ada di [VALIDATION.md](VALIDATION.md).
 
+## Server lokal dengan Docker (tanpa Node/OpenSSL di komputer)
+
+Pasang Docker Desktop atau Docker Engine dengan Compose, lalu:
+
+```sh
+git clone https://github.com/zorororonoa1946-del/aplikasi.git
+cd aplikasi
+```
+
+Buat file `.env` di direktori tersebut berisi IP LAN komputer server (lihat `ipconfig` di Windows atau `ip addr` di Linux):
+
+```dotenv
+LAN_IP=192.168.1.10
+```
+
+Ganti IP contoh dengan IP komputer Anda, kemudian:
+
+```sh
+docker compose up -d --build
+docker compose logs vault
+docker compose exec vault cat /data/connection.txt
+docker compose cp vault:/data/ca.pem ./nusa-local-ca.pem
+```
+
+`connection.txt` berisi alamat dan token privat. Masukkan keduanya ke pengaturan relay Android. Salin **nusa-local-ca.pem** ke HP, impor melalui pengaturan relay, lalu cocokkan fingerprint dengan log server sebelum menyetujui. Kunci privat tetap di volume Docker.
+
+Hubungkan HP dan laptop ke jaringan WiFi/LAN yang sama. Setiap perangkat memiliki IP sendiri; keduanya memakai **alamat server yang sama**, misalnya `https://192.168.1.10:3443`. Izinkan TCP 3443 pada firewall komputer untuk jaringan privat. Jika IP komputer berubah, ubah `.env`, jalankan kembali `docker compose up -d`, dan perbarui alamat di Android. Reservasi DHCP membantu menjaga IP tetap.
+
+Di Android pilih file/folder lalu **Backup sekarang** atau aktifkan backup otomatis. Di browser laptop, percayai CA publik tersebut melalui pengaturan sertifikat browser/OS, buka alamat HTTPS server, masuk dengan kata sandi vault yang sama, isi token, lalu **Pulihkan dari relay** dan unduh file. Jangan melewati verifikasi HTTPS.
+
+Server menyediakan backup dan pengambilan **file yang telah dikirim HP ke relay**. Kontrol layar HP, SMS, lokasi, dan browsing langsung seluruh HP dari laptop belum tersedia. Akses LAN memerlukan server menyala dan dapat dijangkau; akses di luar rumah memerlukan konfigurasi relay publik yang dijelaskan di bawah.
+
+Data terenkripsi, token dan identitas TLS tersimpan pada volume `vault-local`, tetap ada setelah restart/rebuild. `docker compose down` menghentikan layanan; jangan tambahkan `-v` jika data masih diperlukan. Backup volume secara berkala. Kuota bawaan 10 GiB dapat diubah dengan `MAX_STORAGE_BYTES` dalam `.env`.
+
 ## Paket Android
 
 - Minimum Android 8.0 / API 26; target Android 15 / API 35.

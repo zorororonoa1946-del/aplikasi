@@ -1,9 +1,17 @@
 {
-  "created": "2026-10-24T07:43:17.847Z",
+  "created": "2026-10-24T08:04:21.129Z",
   "files": [
     {
+      "path": "compose.yaml",
+      "sha256": "98e4ef5c905bd51bddbcdcd8e4c02f06fbd2c4e2b0adbe89c7c51c1f88de8704"
+    },
+    {
+      "path": "deployment/Dockerfile.local",
+      "sha256": "51f39cc076e6c06562d6d8482c3bf6aa308a4b21d753d740b7038193a65cec3f"
+    },
+    {
       "path": ".dockerignore",
-      "sha256": "51777b633c929c18ec8260653ede5760b3e3f124684ae4cea296929f3b04ca15"
+      "sha256": "8b3958c349473f30d0ed654b726ec431f4b88af48fa70080653ab0a6955909bb"
     },
     {
       "path": ".github/workflows/checks.yml",
@@ -23,11 +31,11 @@
     },
     {
       "path": "INSTALL.md",
-      "sha256": "5bf9325ae67bac0fa8ba6080aeab4cb880fcb824f799d0cb455366118c03074c"
+      "sha256": "ca59f8389d406100d6558f0d711a95f0b13f45693c121945177578114d915999"
     },
     {
       "path": "README.md",
-      "sha256": "77cf6cc8e1bed2f101fff2fde97cd1e7aeafc155a0ca78f9cf5273a4f5f52ecc"
+      "sha256": "9e73283c70374188c40d6a4af06f1c7432a0736a2f446973ae05b5544a3cc826"
     },
     {
       "path": "TESTING.md",
@@ -35,7 +43,7 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "13d432cec0719bda1b4a8bdc485795b35f5a1258f3285c7c42a7c6e5e9caac68"
+      "sha256": "1f91e7a241ae6d7c8388acb9fed03a95b1a31b2af38ebc4f5ac02efb7afbf7ab"
     },
     {
       "path": "android/THIRD_PARTY_NOTICES.txt",
