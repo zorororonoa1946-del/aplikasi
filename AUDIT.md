@@ -27,3 +27,5 @@ Perubahan implementasi tersedia dalam source; laporan pengujian terbaru ada di V
 - Target >95% sukses dan zero data loss adalah sasaran PRD, bukan jaminan yang dapat dibuktikan oleh tes lokal. Tes memeriksa putus jaringan, resume, korupsi, konflik, kuota, kesamaan byte dan upgrade. Simpan lebih dari satu backup.
 - Peringatan lint ScopedStorage dipertahankan: izin all-files terkait kebijakan Play Store. Paket ditujukan untuk sideload pribadi, sesuai PRD.
 - CI baseline GitHub gagal. Workflow diperbaiki dengan action terpin, runner tetap, SDK, deteksi KVM dan fallback emulator software; status run untuk setiap commit tersedia pada tab Actions GitHub. Tes lokal tidak dianggap bukti CI GitHub lulus.
+
+CI terakhir yang diverifikasi: https://github.com/zorororonoa1946-del/aplikasi/actions/runs/40074751665 — **web dan Android lulus**, kode `114d9e892d6c858fd18e908beecbcaa5577be909`. Hasil lokal terbaru: 21 pemeriksaan native utama + 1 pencabutan izin di proses baru, 9 tes Node, browser file besar/format lama/perbaikan korupsi, container, APK produksi dan upgrade bertanda tangan.

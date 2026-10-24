@@ -96,3 +96,5 @@ INSTRUMENTATION_RESULT: stream=PASS revoked shared storage permission blocks sca
 INSTRUMENTATION_CODE: -1
 
 PASS Android -> HTTPS relay -> independent laptop browser, exact restored bytes
+
+GitHub Actions PASS: web + android; tested code 114d9e892d6c858fd18e908beecbcaa5577be909; https://github.com/zorororonoa1946-del/aplikasi/actions/runs/40074751665

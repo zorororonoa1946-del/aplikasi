@@ -23,3 +23,7 @@ Pada percobaan awal, harness izin menghentikan instrumentasi ketika mencabut izi
 Belum dibuktikan untuk rilis ini: perilaku izin all-files/penjadwalan pada semua Android modern/vendor, Android 15 foreground di emulator software yang sebelumnya mengalami ANR System UI, perangkat ARM fisik, data privat aplikasi lain (dibatasi OS), deployment VPS dan jaringan seluler nyata, reliability >95% jangka panjang, atau zero data loss dalam seluruh kondisi. Browser download >64 MiB memerlukan File System Access atau helper CLI. Jadwal background dapat ditunda OS. Checklist perangkat fisik ada di TESTING.md.
 
 Workflow GitHub Actions menjalankan regresi web/container dan native pada setiap push: Android 35 dengan KVM jika tersedia, Android 26 software sebagai fallback; compile/target SDK tetap 35. Run audit pertama gagal pada setup KVM sebelum tes, lalu workflow diperbaiki untuk mendeteksi kemampuan runner tanpa mematikan pengujian native. Status remote aktual: https://github.com/zorororonoa1946-del/aplikasi/actions. Tes lokal tidak dianggap bukti CI remote lulus.
+
+## Verifikasi GitHub Actions
+
+Run https://github.com/zorororonoa1946-del/aplikasi/actions/runs/40074751665 lulus untuk job web dan Android pada kode `114d9e892d6c858fd18e908beecbcaa5577be909`. Kegagalan setup KVM dan pencabutan izin saat instrumentasi telah diperbaiki. Commit setelah kode yang diuji hanya memperbarui dokumentasi/paket/laporan; workflow mengabaikan push yang hanya mengubah Markdown dan artifacts.
