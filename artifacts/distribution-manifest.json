@@ -1,10 +1,6 @@
 {
-  "created": "2026-10-24T07:20:54.558Z",
+  "created": "2026-10-24T07:28:23.118Z",
   "files": [
-    {
-      "path": "scripts/ci-android.sh",
-      "sha256": "55ae3f6041e71f08d1873044dd8353fe7863047b25a73375ff5bfb2588881946"
-    },
     {
       "path": ".dockerignore",
       "sha256": "51777b633c929c18ec8260653ede5760b3e3f124684ae4cea296929f3b04ca15"
@@ -212,6 +208,10 @@
     {
       "path": "scripts/browser-e2e.mjs",
       "sha256": "ea75a437f6ce6e83a1107cb98ea555d24fdb0429b7b82e2cdff65a7f47f386b7"
+    },
+    {
+      "path": "scripts/ci-android.sh",
+      "sha256": "90f2c6f3662ac2cf418717c25ce7a0348c34e33ff3788169980e4ddf27542085"
     },
     {
       "path": "scripts/compatibility-smoke.mjs",
