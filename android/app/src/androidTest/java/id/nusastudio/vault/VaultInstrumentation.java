@@ -141,6 +141,19 @@ public final class VaultInstrumentation extends Instrumentation {
       VaultStore store = new VaultStore(context);
       String migration = arguments.getString("suite", "");
       String migrationId = "11111111-1111-4111-8111-111111111111";
+      if ("storage-revoked".equals(migration)) {
+        require(!SharedStorage.allowed(context), "Revoked storage permission still allowed");
+        boolean denied = false;
+        try {
+          SharedStorage.scan(context, store, pass);
+        } catch (SecurityException expected) {
+          denied = true;
+        }
+        require(denied, "Revoked permission still permits shared storage scanning");
+        result.putString("stream", "PASS revoked shared storage permission blocks scanning\n");
+        finish(Activity.RESULT_OK, result);
+        return;
+      }
       if ("migration-seed".equals(migration)) {
         store.unlock(pass);
         byte[] bytes = "legacy upgrade data 🔒".getBytes(StandardCharsets.UTF_8);
@@ -513,11 +526,6 @@ public final class VaultInstrumentation extends Instrumentation {
                 modern
                     ? "appops set id.nusastudio.vault MANAGE_EXTERNAL_STORAGE allow"
                     : "pm grant id.nusastudio.vault android.permission.READ_EXTERNAL_STORAGE";
-            String revoke =
-                modern
-                    ? "appops set id.nusastudio.vault MANAGE_EXTERNAL_STORAGE deny"
-                    : "pm revoke id.nusastudio.vault android.permission.READ_EXTERNAL_STORAGE";
-            if (modern) shell(revoke);
             require(!SharedStorage.allowed(context), "Storage permission unexpectedly allowed");
             boolean denied = false;
             try {
@@ -545,9 +553,7 @@ public final class VaultInstrumentation extends Instrumentation {
               require(found, "Shared storage fixture missing");
             } finally {
               shell("rm -f /sdcard/Download/nusa-audit-owner.txt");
-              if (modern) shell(revoke);
             }
-            if (modern) require(!SharedStorage.allowed(context), "Permission revocation ignored");
           });
       check(
           "modified chunk is rejected and restored from immutable relay backup",

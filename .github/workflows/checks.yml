@@ -1,6 +1,9 @@
 name: Build and test
 on:
   push:
+    paths-ignore:
+      - 'artifacts/**'
+      - '**/*.md'
   pull_request:
 permissions:
   contents: read

@@ -209,6 +209,42 @@ try {
   ]);
   assert.match(result, /Tests passed: 21/);
   assert.doesNotMatch(result, /FAIL |INSTRUMENTATION_FAILED|Process crashed/);
+  // Revocation intentionally kills the app on Android. Do it after the first
+  // instrumentation process exits, then verify refusal in a fresh process.
+  await command("scripts/adb.sh", [
+    "shell",
+    ...(Number(api) >= 30
+      ? [
+          "appops",
+          "set",
+          "id.nusastudio.vault",
+          "MANAGE_EXTERNAL_STORAGE",
+          "deny",
+        ]
+      : [
+          "pm",
+          "revoke",
+          "id.nusastudio.vault",
+          "android.permission.READ_EXTERNAL_STORAGE",
+        ]),
+  ]);
+  const revoked = await command("scripts/adb.sh", [
+    "shell",
+    "am",
+    "instrument",
+    "-w",
+    "-r",
+    "-e",
+    "suite",
+    "storage-revoked",
+    "id.nusastudio.vault.test/id.nusastudio.vault.VaultInstrumentation",
+  ]);
+  assert.match(
+    revoked,
+    /PASS revoked shared storage permission blocks scanning/,
+  );
+  assert.doesNotMatch(revoked, /FAIL |INSTRUMENTATION_FAILED|Process crashed/);
+
   // Independent browser verifies the exact bytes produced/encrypted on Android.
   browser = await chromium.launch({
     executablePath: process.env.CHROMIUM_PATH || "/usr/bin/chromium",
@@ -240,7 +276,7 @@ try {
   await mkdir("artifacts", { recursive: true });
   await writeFile(
     "artifacts/android-test-results.txt",
-    `${new Date().toISOString()}\nAndroid API ${api}\n${result}\nPASS Android -> HTTPS relay -> independent laptop browser, exact restored bytes\n`,
+    `${new Date().toISOString()}\nAndroid API ${api}\n${result}\n${revoked}\nPASS Android -> HTTPS relay -> independent laptop browser, exact restored bytes\n`,
   );
   console.log(
     "PASS Android -> HTTPS relay -> laptop browser: exact restored bytes",
