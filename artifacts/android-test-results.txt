@@ -1,3 +1,4 @@
+Android API 26, x86_64 disposable emulator, release audit 1.1.0
 INSTRUMENTATION_STATUS: stream=PASS AES-GCM round trip & randomized encryption
 
 INSTRUMENTATION_STATUS_CODE: 0

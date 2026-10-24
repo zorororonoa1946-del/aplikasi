@@ -1,57 +1,21 @@
 {
-  "created": "2026-10-24T05:17:54.454Z",
+  "created": "2026-10-24T05:19:49.280Z",
   "files": [
-    {
-      "path": "AUDIT.md",
-      "sha256": "894c934db9b29c9a10e1d7be0747ff1f18b4dd36f96d21ce71dd0125fea00b95"
-    },
-    {
-      "path": "android/app/src/androidTest/assets/unrelated-ca.pem",
-      "sha256": "71ebbc2ece6a783f563a8ee2f45e1f72931bcf32bb0b1e7409dd52f42906bb3c"
-    },
-    {
-      "path": "android/app/src/main/java/id/nusastudio/vault/BackupPlan.java",
-      "sha256": "361849c7b42e92b5753717e881dee3016dbb40500707e24300345fc196c3bcec"
-    },
-    {
-      "path": "android/app/src/main/java/id/nusastudio/vault/SharedStorage.java",
-      "sha256": "0c1fe803ceddf6af886ae7a282fb2b6ee7c415f02c547ad5b38f6f9f7a5b5880"
-    },
-    {
-      "path": "public/format.js",
-      "sha256": "7c27ddee4039c9c76953f6bb76351da8f7466f90ce2f2c610b2ef4dea96699d4"
-    },
-    {
-      "path": "scripts/relay-local.mjs",
-      "sha256": "877838b0ace836459db77d2b934585b0270bf9feabf4f586054693b257d0507f"
-    },
-    {
-      "path": "scripts/restore.mjs",
-      "sha256": "5591fd19ed84e047cea41faccb28f5ac34382fe5f0a4933d976c1dc2abf3c6c3"
-    },
-    {
-      "path": "test/chunks.test.js",
-      "sha256": "bc2529ec1abb69fd68e4f9779f27e1a4f333ce1a64764834b7ae4aaeefbb1943"
-    },
-    {
-      "path": "test/local-relay.test.js",
-      "sha256": "c878b67667f9d1c2fc72b60fe44b96edf11a8dd9e733c66c3e620807cd9f168f"
-    },
-    {
-      "path": "test/restore.test.js",
-      "sha256": "10c194c1f121bf9d0adbce1d07dc08663c5b47455e7f4093b1f1d75b02be81c0"
-    },
     {
       "path": ".dockerignore",
       "sha256": "51777b633c929c18ec8260653ede5760b3e3f124684ae4cea296929f3b04ca15"
     },
     {
       "path": ".github/workflows/checks.yml",
-      "sha256": "f892a0461a777f6c1ad6c2b6e5679b4d8d7138af97f61d44a88d3d3d20a49993"
+      "sha256": "ff3c459e22a34e058ecced020e2ffc9b1ba499a0ebe911a3693cc6ef8f043f6d"
     },
     {
       "path": ".gitignore",
       "sha256": "3049a6e0b148ee48f78548146f1f19822f5faf4a3d5d549d3a839b89030f94b4"
+    },
+    {
+      "path": "AUDIT.md",
+      "sha256": "fad373439e16121f51bdb9881cff68ec716fd72c1089b2bc7f19dd2874313574"
     },
     {
       "path": "Dockerfile",
@@ -71,7 +35,7 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "daff18f239db7d8570a63a554fdac08615d48bb789ebb4768758e3c099923e64"
+      "sha256": "b33c0dca1ca5b31a798ba95db7665b1a38661249d8379e770016c35ac0420624"
     },
     {
       "path": "android/THIRD_PARTY_NOTICES.txt",
@@ -84,6 +48,10 @@
     {
       "path": "android/app/src/androidTest/AndroidManifest.xml",
       "sha256": "141da46cdc64e5db63e0e86e3f91a0b316c9415f7b76d5c0621acc3c5630febd"
+    },
+    {
+      "path": "android/app/src/androidTest/assets/unrelated-ca.pem",
+      "sha256": "71ebbc2ece6a783f563a8ee2f45e1f72931bcf32bb0b1e7409dd52f42906bb3c"
     },
     {
       "path": "android/app/src/androidTest/assets/web-fixture.json",
@@ -118,6 +86,10 @@
       "sha256": "7823a571045c110366a7604b31f8f304f55f01d07d3aeccb4f019c333b2e9ee9"
     },
     {
+      "path": "android/app/src/main/java/id/nusastudio/vault/BackupPlan.java",
+      "sha256": "361849c7b42e92b5753717e881dee3016dbb40500707e24300345fc196c3bcec"
+    },
+    {
       "path": "android/app/src/main/java/id/nusastudio/vault/MainActivity.java",
       "sha256": "87ebccd1f71f600e601006e3037180ddcf30012140457a567e7213911894a39b"
     },
@@ -132,6 +104,10 @@
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/RelayClient.java",
       "sha256": "5587141bdaff72e8764871a262ca7cf7ec8809d6e9706c0e5f319947b7e76a20"
+    },
+    {
+      "path": "android/app/src/main/java/id/nusastudio/vault/SharedStorage.java",
+      "sha256": "0c1fe803ceddf6af886ae7a282fb2b6ee7c415f02c547ad5b38f6f9f7a5b5880"
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/VaultCrypto.java",
@@ -206,6 +182,10 @@
       "sha256": "b4fe1c9d89cdb45e3aefc9d75b52d424304819f9b7741ded2989e3cc5eed0255"
     },
     {
+      "path": "public/format.js",
+      "sha256": "7c27ddee4039c9c76953f6bb76351da8f7466f90ce2f2c610b2ef4dea96699d4"
+    },
+    {
       "path": "public/index.html",
       "sha256": "cae3ee77617a9585eeb4171b4a417d6a103cced0919eec7c76330e7e3b0143e8"
     },
@@ -223,7 +203,7 @@
     },
     {
       "path": "scripts/android-e2e.mjs",
-      "sha256": "19ac51990f542c21948f4a65ecfb4f57e1e61dde1b496b80799ccae0ec0ac7df"
+      "sha256": "90eb147b4a668ba9080db44c56d7d22da34b66cb181a7e2176e22201547f4c0c"
     },
     {
       "path": "scripts/browser-e2e.mjs",
@@ -254,16 +234,36 @@
       "sha256": "a63c7458969e6ba4530e3bf0878e2b6d4d3870c910fd75eb8a247ef467abee6d"
     },
     {
+      "path": "scripts/relay-local.mjs",
+      "sha256": "877838b0ace836459db77d2b934585b0270bf9feabf4f586054693b257d0507f"
+    },
+    {
       "path": "scripts/release-smoke.mjs",
       "sha256": "28af3b3ff8d585c86b6ca9c199818f177e6a5838a30a28a134235c2f83c3aa58"
+    },
+    {
+      "path": "scripts/restore.mjs",
+      "sha256": "5591fd19ed84e047cea41faccb28f5ac34382fe5f0a4933d976c1dc2abf3c6c3"
     },
     {
       "path": "server.js",
       "sha256": "b9f3e284ff460087797e40fdf835ee1b297ea6be1558cdfcf1eebe717ade7f36"
     },
     {
+      "path": "test/chunks.test.js",
+      "sha256": "bc2529ec1abb69fd68e4f9779f27e1a4f333ce1a64764834b7ae4aaeefbb1943"
+    },
+    {
       "path": "test/installer.test.js",
       "sha256": "4964c9df49205f1db01dfe309042ca7b5a3071d506efe70fadd76ff6429d5518"
+    },
+    {
+      "path": "test/local-relay.test.js",
+      "sha256": "c878b67667f9d1c2fc72b60fe44b96edf11a8dd9e733c66c3e620807cd9f168f"
+    },
+    {
+      "path": "test/restore.test.js",
+      "sha256": "10c194c1f121bf9d0adbce1d07dc08663c5b47455e7f4093b1f1d75b02be81c0"
     },
     {
       "path": "test/server.test.js",
@@ -291,7 +291,7 @@
     },
     {
       "path": "artifacts/android-test-results.txt",
-      "sha256": "390d44a119d96cd00a3e6d6279e4e4a68fe8f83bf021bbd9f316f5392fe8aa61"
+      "sha256": "b334ed97e71a96946f8255b1192c9b8d233a41b1c78d1c120a565cb645f46032"
     },
     {
       "path": "artifacts/container-test-results.txt",

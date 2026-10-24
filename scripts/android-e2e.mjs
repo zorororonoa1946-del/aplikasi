@@ -155,6 +155,13 @@ try {
       throw Error("Android boot did not complete within 15 minutes");
     await new Promise((r) => setTimeout(r, 2000));
   }
+  const api = (
+    await command(
+      "scripts/adb.sh",
+      ["shell", "getprop", "ro.build.version.sdk"],
+      true,
+    )
+  ).trim();
   const serial = await command("scripts/adb.sh", ["get-serialno"], true);
   if (!serial.trim().startsWith("emulator-"))
     throw Error(
@@ -233,7 +240,7 @@ try {
   await mkdir("artifacts", { recursive: true });
   await writeFile(
     "artifacts/android-test-results.txt",
-    `${result}\nPASS Android -> HTTPS relay -> independent laptop browser, exact restored bytes\n`,
+    `${new Date().toISOString()}\nAndroid API ${api}\n${result}\nPASS Android -> HTTPS relay -> independent laptop browser, exact restored bytes\n`,
   );
   console.log(
     "PASS Android -> HTTPS relay -> laptop browser: exact restored bytes",

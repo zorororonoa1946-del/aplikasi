@@ -45,20 +45,28 @@ jobs:
           subprocess.run([sys.argv[1],'--licenses'],input='y\n'*100,text=True,check=True)
           PYSDK
           "$manager" 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.2.12479018' 'cmake;3.22.1'
-      - name: Enable KVM for the disposable hosted runner
+      - name: Select accelerated or software emulator
+        id: emulator
+        shell: bash
         run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-          test -r /dev/kvm && test -w /dev/kvm
+          if [[ -c /dev/kvm ]] && sudo chmod a+rw /dev/kvm && [[ -r /dev/kvm && -w /dev/kvm ]]; then
+            echo 'api=35' >> "$GITHUB_OUTPUT"
+            echo 'accel=auto' >> "$GITHUB_OUTPUT"
+            echo 'Android 35 with KVM'
+          else
+            echo 'api=26' >> "$GITHUB_OUTPUT"
+            echo 'accel=off' >> "$GITHUB_OUTPUT"
+            echo 'KVM unavailable: testing Android 26 with software emulation; compile/target SDK remains 35'
+          fi
       - run: npm ci
       - uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
         with:
-          api-level: 35
+          api-level: ${{ steps.emulator.outputs.api }}
           target: default
           arch: x86_64
           profile: pixel_2
           disable-animations: true
+          emulator-options: -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader -cores 2 -memory 2048 -accel ${{ steps.emulator.outputs.accel }}
           script: npm run test:android
         env:
           CHROMIUM_PATH: /usr/bin/google-chrome

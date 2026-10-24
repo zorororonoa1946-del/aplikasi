@@ -26,4 +26,4 @@ Perubahan implementasi tersedia dalam source; laporan pengujian terbaru ada di V
 - Akses internet disiapkan melalui paket VPS/Caddy. Pengguna belum memiliki VPS/domain sehingga koneksi publik nyata belum dapat divalidasi; jalur HTTPS LAN dapat dipasang tanpa itu.
 - Target >95% sukses dan zero data loss adalah sasaran PRD, bukan jaminan yang dapat dibuktikan oleh tes lokal. Tes memeriksa putus jaringan, resume, korupsi, konflik, kuota, kesamaan byte dan upgrade. Simpan lebih dari satu backup.
 - Peringatan lint ScopedStorage dipertahankan: izin all-files terkait kebijakan Play Store. Paket ditujukan untuk sideload pribadi, sesuai PRD.
-- CI baseline GitHub gagal. Workflow diperbaiki dengan action terpin, runner tetap, SDK dan KVM; status run untuk setiap commit tersedia pada tab Actions GitHub. Tes lokal tidak dianggap bukti CI GitHub lulus.
+- CI baseline GitHub gagal. Workflow diperbaiki dengan action terpin, runner tetap, SDK, deteksi KVM dan fallback emulator software; status run untuk setiap commit tersedia pada tab Actions GitHub. Tes lokal tidak dianggap bukti CI GitHub lulus.
