@@ -1,0 +1,17 @@
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: CN=Nusa Personal Vault
+Signer #1 certificate SHA-256 digest: 705e4d735009880c24314e463e08ab504524a99728c6c9870a5f63293c1b9cfe
+Signer #1 certificate SHA-1 digest: 392b83bef563b8eefe376bb87b4ff48bea97ebf9
+Signer #1 certificate MD5 digest: d9e263436bf8b3e15ac1663bd75eda8c
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 3072
+Signer #1 public key SHA-256 digest: 48e02a876af4c84121c6e40b528673ed1e0d0b0d0fb0e9d763ea7ccf6ac24a67
+Signer #1 public key SHA-1 digest: 5cf5f3fa5148e0bfde4d69067b719f05ef388dd2
+Signer #1 public key MD5 digest: 234cffb4ce4246bd917ec080d9a490b2

@@ -1,0 +1,64 @@
+INSTRUMENTATION_STATUS: stream=PASS AES-GCM round trip & randomized encryption
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS wrong password and tamper rejection
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS Web Crypto -> Android interoperability
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS encrypted persistence, import deduplication, restart
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS Keystore-protected credentials
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS HTTPS relay upload, retry and restore
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS cleartext and credential-bearing relay rejection
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS Android JobScheduler opt-in and cancellation
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS scheduled background backup actually executes
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS SAF folder recursion and unchanged-file deduplication
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS company profile and locked UI
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS seven taps opens password dialog
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS password unlocks actual native file manager
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS lock returns to company profile
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: passed=14
+INSTRUMENTATION_RESULT: stream=
+PASS AES-GCM round trip & randomized encryption
+PASS wrong password and tamper rejection
+PASS Web Crypto -> Android interoperability
+PASS encrypted persistence, import deduplication, restart
+PASS Keystore-protected credentials
+PASS HTTPS relay upload, retry and restore
+PASS cleartext and credential-bearing relay rejection
+PASS Android JobScheduler opt-in and cancellation
+PASS scheduled background backup actually executes
+PASS SAF folder recursion and unchanged-file deduplication
+PASS company profile and locked UI
+PASS seven taps opens password dialog
+PASS password unlocks actual native file manager
+PASS lock returns to company profile
+
+Tests passed: 14
+
+INSTRUMENTATION_CODE: -1
+
+PASS Android -> HTTPS relay -> independent laptop browser, exact restored bytes

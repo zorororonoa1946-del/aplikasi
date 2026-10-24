@@ -1,0 +1,25 @@
+{
+  "name": "personal-vault",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js",
+    "test:browser": "node scripts/browser-e2e.mjs",
+    "test:android": "node scripts/android-e2e.mjs",
+    "build:android": "bash scripts/android-build.sh",
+    "relay:init": "node scripts/init-relay.mjs",
+    "test:container": "node scripts/container-smoke.mjs",
+    "package:android": "bash scripts/package-android.sh",
+    "package:distribution": "node scripts/package-distribution.mjs",
+    "test:release": "node scripts/release-smoke.mjs",
+    "test:compatibility": "node scripts/compatibility-smoke.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
+}

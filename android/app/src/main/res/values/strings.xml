@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="save_copy">Simpan salinan</string>
+  <string name="delete_local">Hapus lokal</string>
+  <string name="empty_files">Belum ada file yang sesuai.</string>
+  <string name="operation_running">Memproses… Jangan tutup aplikasi selama operasi manual.</string>
+  <string name="enable_automatic">Izinkan backup otomatis (sekitar 15 menit)</string>
+  <string name="unmetered_only">Hanya jaringan tanpa batas kuota (Wi-Fi)</string>
+  <string name="connection_saved">Pengaturan koneksi tersimpan terenkripsi.</string>
+  <string name="file_details">%1$s
+%2$d B · %3$s</string>
+  <string name="operation_failed">Gagal: %1$s</string>
+  <string name="automatic_explanation">Backup otomatis membaca folder yang Anda pilih dan file vault. Kata sandi untuk background serta token disimpan terenkripsi memakai Android Keystore. Android dapat menunda jadwal. Jadwal dipertahankan setelah reboot; force-stop menonaktifkan tugas sampai aplikasi dibuka lagi. Menonaktifkan opsi menghapus kata sandi background.</string>
+</resources>

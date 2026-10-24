@@ -1,0 +1,14 @@
+2026-10-24T03:01:21.383Z
+PASS release APK SHA-256 and v2 signature verification
+PASS installation on Android API 26 x86_64 emulator
+PASS launch and rendered company profile
+PASS vault remains locked without authentication
+Starting: Intent { cmp=id.nusastudio.vault/.MainActivity }
+Status: ok
+Activity: id.nusastudio.vault/.MainActivity
+ThisTime: 1637
+TotalTime: 1637
+WaitTime: 1930
+Complete
+
+Emulator System UI recovery: false

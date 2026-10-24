@@ -1,0 +1,29 @@
+.vault-data/
+node_modules/
+.env
+android/.gradle/
+android/local.properties
+android/**/build/
+artifacts/*.apk
+artifacts/*.sha256
+artifacts/*.png
+*.jks
+# Generated localhost TLS trust for instrumented tests only, removed before packaging.
+android/app/src/debug/
+deployment/.env
+.local/
+
+android/**/.cxx/
+
+artifacts/*.idsig
+artifacts/*.zip
+artifacts/distribution-manifest.json
+
+# Reviewed release artifacts are published with the application source.
+!artifacts/nusa-vault-1.0.0.apk
+!artifacts/nusa-vault-1.0.0.apk.sha256
+!artifacts/nusa-vault-installation-1.0.0.zip
+!artifacts/nusa-vault-installation-1.0.0.zip.sha256
+!artifacts/distribution-manifest.json
+!artifacts/company.png
+!artifacts/vault.png

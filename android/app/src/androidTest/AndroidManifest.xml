@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ <application>
+  <activity android:name="id.nusastudio.vault.GrantTestDocuments" android:exported="true"/>
+  <!-- Synthetic documents only, installed exclusively in the disposable test APK. -->
+  <provider android:name="id.nusastudio.vault.TestDocuments" android:authorities="id.nusastudio.vault.testdocuments" android:exported="true" android:permission="android.permission.MANAGE_DOCUMENTS" android:grantUriPermissions="true">
+   <intent-filter><action android:name="android.content.action.DOCUMENTS_PROVIDER"/></intent-filter>
+  </provider>
+ </application>
+</manifest>

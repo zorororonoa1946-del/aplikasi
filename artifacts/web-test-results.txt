@@ -1,0 +1,3 @@
+Recorded from completed checks in this development session, 2026-10-24.
+PASS npm test: 3 tests, 0 failed.
+PASS npm run test:browser: mobile import/encryption, relay backup, independent browser restore, exact downloaded bytes, lock, cancellation during unlock, wrong-password rejection; no browser errors.
