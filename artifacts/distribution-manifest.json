@@ -1,13 +1,17 @@
 {
-  "created": "2026-10-24T05:19:49.280Z",
+  "created": "2026-10-24T07:20:54.558Z",
   "files": [
+    {
+      "path": "scripts/ci-android.sh",
+      "sha256": "55ae3f6041e71f08d1873044dd8353fe7863047b25a73375ff5bfb2588881946"
+    },
     {
       "path": ".dockerignore",
       "sha256": "51777b633c929c18ec8260653ede5760b3e3f124684ae4cea296929f3b04ca15"
     },
     {
       "path": ".github/workflows/checks.yml",
-      "sha256": "ff3c459e22a34e058ecced020e2ffc9b1ba499a0ebe911a3693cc6ef8f043f6d"
+      "sha256": "a4ca128382b572bdfc9a068121dfafd1f02f1214000a72e9ad9a682c0c7401d6"
     },
     {
       "path": ".gitignore",
