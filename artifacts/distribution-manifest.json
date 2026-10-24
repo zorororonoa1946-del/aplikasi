@@ -1,17 +1,57 @@
 {
-  "created": "2026-10-24T03:12:27.420Z",
+  "created": "2026-10-24T05:17:54.454Z",
   "files": [
+    {
+      "path": "AUDIT.md",
+      "sha256": "894c934db9b29c9a10e1d7be0747ff1f18b4dd36f96d21ce71dd0125fea00b95"
+    },
+    {
+      "path": "android/app/src/androidTest/assets/unrelated-ca.pem",
+      "sha256": "71ebbc2ece6a783f563a8ee2f45e1f72931bcf32bb0b1e7409dd52f42906bb3c"
+    },
+    {
+      "path": "android/app/src/main/java/id/nusastudio/vault/BackupPlan.java",
+      "sha256": "361849c7b42e92b5753717e881dee3016dbb40500707e24300345fc196c3bcec"
+    },
+    {
+      "path": "android/app/src/main/java/id/nusastudio/vault/SharedStorage.java",
+      "sha256": "0c1fe803ceddf6af886ae7a282fb2b6ee7c415f02c547ad5b38f6f9f7a5b5880"
+    },
+    {
+      "path": "public/format.js",
+      "sha256": "7c27ddee4039c9c76953f6bb76351da8f7466f90ce2f2c610b2ef4dea96699d4"
+    },
+    {
+      "path": "scripts/relay-local.mjs",
+      "sha256": "877838b0ace836459db77d2b934585b0270bf9feabf4f586054693b257d0507f"
+    },
+    {
+      "path": "scripts/restore.mjs",
+      "sha256": "5591fd19ed84e047cea41faccb28f5ac34382fe5f0a4933d976c1dc2abf3c6c3"
+    },
+    {
+      "path": "test/chunks.test.js",
+      "sha256": "bc2529ec1abb69fd68e4f9779f27e1a4f333ce1a64764834b7ae4aaeefbb1943"
+    },
+    {
+      "path": "test/local-relay.test.js",
+      "sha256": "c878b67667f9d1c2fc72b60fe44b96edf11a8dd9e733c66c3e620807cd9f168f"
+    },
+    {
+      "path": "test/restore.test.js",
+      "sha256": "10c194c1f121bf9d0adbce1d07dc08663c5b47455e7f4093b1f1d75b02be81c0"
+    },
     {
       "path": ".dockerignore",
       "sha256": "51777b633c929c18ec8260653ede5760b3e3f124684ae4cea296929f3b04ca15"
     },
     {
       "path": ".github/workflows/checks.yml",
-      "sha256": "ad3793c5abf43b9f6504b49d950911f317f66ea7509ada2de19b661ef43c8bd7"
+      "sha256": "f892a0461a777f6c1ad6c2b6e5679b4d8d7138af97f61d44a88d3d3d20a49993"
     },
     {
       "path": ".gitignore",
-      "sha256": "8b43fa382d50c7a88b358c53f0bcc07bb78c52bb4b05771263ca7dbd4c552fd2"
+      "sha256": "3049a6e0b148ee48f78548146f1f19822f5faf4a3d5d549d3a839b89030f94b4"
     },
     {
       "path": "Dockerfile",
@@ -19,19 +59,19 @@
     },
     {
       "path": "INSTALL.md",
-      "sha256": "d2cd3603ebb149cd8930e821534b03517eb4a6fbae6520a10caf36401e3ad3e5"
+      "sha256": "5bf9325ae67bac0fa8ba6080aeab4cb880fcb824f799d0cb455366118c03074c"
     },
     {
       "path": "README.md",
-      "sha256": "cd2d16c835a2f056a0078c3b047e57ee8a8c52cc2dd1bea4c9a01e8ff7a486a9"
+      "sha256": "77cf6cc8e1bed2f101fff2fde97cd1e7aeafc155a0ca78f9cf5273a4f5f52ecc"
     },
     {
       "path": "TESTING.md",
-      "sha256": "4671f898e021850996dce4de4b1a2e846fd87a72ded3f0d875efa0042ea61786"
+      "sha256": "9a0096b9a2aededbdcdc52595f68ce1ac2dc05fd674d01ed1b15fe4bcd8285ed"
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "5b8d6c563b3a4126342d57d2c92884a30563eb62671ee32d18ce5e45c0877a56"
+      "sha256": "daff18f239db7d8570a63a554fdac08615d48bb789ebb4768758e3c099923e64"
     },
     {
       "path": "android/THIRD_PARTY_NOTICES.txt",
@@ -39,7 +79,7 @@
     },
     {
       "path": "android/app/build.gradle",
-      "sha256": "1a553e2cb948ed75e19d28e4d29a4db2c6e666413c43dbc1b769723ef7367de1"
+      "sha256": "c1b38f1e901664e9f51e10c2c7629a23fe9a0a10ea36169a2d339a1bbad01314"
     },
     {
       "path": "android/app/src/androidTest/AndroidManifest.xml",
@@ -51,19 +91,19 @@
     },
     {
       "path": "android/app/src/androidTest/java/id/nusastudio/vault/GrantTestDocuments.java",
-      "sha256": "07f23bbb401fae4616e98c824df0f8987677301807e65f1be027bb92e159f3ac"
+      "sha256": "d779e724fa02b231a0142afccfd5d37b0fd51e1d89ebab5e48ba79005690b959"
     },
     {
       "path": "android/app/src/androidTest/java/id/nusastudio/vault/TestDocuments.java",
-      "sha256": "182ccd9d6307f0f61b918945fa6e0da943f3b428ee92e1d338084e9c150aaa9a"
+      "sha256": "42d74a79324909f6f5f0d5e18e32f8c33a6889dbc7327213503c13ed4cf5fa76"
     },
     {
       "path": "android/app/src/androidTest/java/id/nusastudio/vault/VaultInstrumentation.java",
-      "sha256": "a3413cf8495a1ee7cf378f10552fd2da6c5767af8ba2e6c0d4a086dfa7a6ab5e"
+      "sha256": "d390785bc292f9c4162bba056e2920320651b609a1e282f702ddffe3a4ab32e0"
     },
     {
       "path": "android/app/src/main/AndroidManifest.xml",
-      "sha256": "b634e25f5e88beccc0ffd3a28b470e0c96448e65dfbe73a5dc6a54e5298265d5"
+      "sha256": "872e1e81e91ece77dc3d216152378821bfc47e6f05b92d2b4fb476327bd3b5f9"
     },
     {
       "path": "android/app/src/main/cpp/CMakeLists.txt",
@@ -75,11 +115,11 @@
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/BackupJob.java",
-      "sha256": "00a0c8442ba031e5f6c1dc552f6ec32ac5470d2a70c8faa7a477201a44ba7ab7"
+      "sha256": "7823a571045c110366a7604b31f8f304f55f01d07d3aeccb4f019c333b2e9ee9"
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/MainActivity.java",
-      "sha256": "ca40c99f043a20cba07c9f8b2820cd633cde0daa71885c15242fa9d6b8ea161a"
+      "sha256": "87ebccd1f71f600e601006e3037180ddcf30012140457a567e7213911894a39b"
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/NativeKdf.java",
@@ -87,11 +127,11 @@
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/PrivateSettings.java",
-      "sha256": "e50c39320b430ee4fff7c8de4ae6115cdf53f064dd22453d3ab9f9c4768e4573"
+      "sha256": "5dcac0848998a8911c1823a27f3a1ab0e753d505b6abb39c7bb365c2d306dd29"
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/RelayClient.java",
-      "sha256": "dd7e82598fda6f5b9af26d21a84ef9c7e1b626fab8c9b23f70092ca73ed59e5e"
+      "sha256": "5587141bdaff72e8764871a262ca7cf7ec8809d6e9706c0e5f319947b7e76a20"
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/VaultCrypto.java",
@@ -99,7 +139,7 @@
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/VaultStore.java",
-      "sha256": "2e8864467caf14474a205659870682d16de5207fbc76f6b101ec3d0e5e9e5824"
+      "sha256": "46aeaa512f729a43426f3eb6a98ca4e283fb45132fb0b1054aea2d1faf691385"
     },
     {
       "path": "android/app/src/main/res/drawable/ic_nusa.xml",
@@ -107,7 +147,7 @@
     },
     {
       "path": "android/app/src/main/res/values/strings.xml",
-      "sha256": "6c7fbf449caf830999692d95d3ff59902631c61fe2cb21cdb3371c19f58f8602"
+      "sha256": "bb1ac53219d133a6734df3cd01c67e9e032036a0e66a47625c97aeebba853d62"
     },
     {
       "path": "android/app/src/main/res/values/styles.xml",
@@ -151,23 +191,23 @@
     },
     {
       "path": "deployment/compose.yaml",
-      "sha256": "f79ad1974abb097d6f7af7c276d8852a311d7cde4ca7590211ada803b417e7cb"
+      "sha256": "9197d4cd5f6c1e0b9aa8defcc58a114db0761aa0b43728bef84f022a9b3e2958"
     },
     {
       "path": "package-lock.json",
-      "sha256": "20c6d92d35b2cb6c69f2804972a2226c1d69d377e232725c7eb135ce0ad47b02"
+      "sha256": "40f7448414b849e66a80ea4b3586d41c0777404ef9c4f5b0a1f0b66fe4cc2f81"
     },
     {
       "path": "package.json",
-      "sha256": "810e90a8b3e3c306fe2751b0569005e7a3c553933abeccc06f716683244cd64e"
+      "sha256": "6f2c4cdf0e4ec0e86e8723877edd2442b006bc4264c467545d658aedcd4b549b"
     },
     {
       "path": "public/app.js",
-      "sha256": "0011ba772427bf2036f05a73a0e1d4d361d3f524b0df69192bc9bf98a976df1a"
+      "sha256": "b4fe1c9d89cdb45e3aefc9d75b52d424304819f9b7741ded2989e3cc5eed0255"
     },
     {
       "path": "public/index.html",
-      "sha256": "9d7da4045927ceb42cb355deb794ff3596f4496f0b476c42221a727cd397e21c"
+      "sha256": "cae3ee77617a9585eeb4171b4a417d6a103cced0919eec7c76330e7e3b0143e8"
     },
     {
       "path": "public/style.css",
@@ -183,51 +223,55 @@
     },
     {
       "path": "scripts/android-e2e.mjs",
-      "sha256": "cd8163a3d3372f481f77f3e0fdd40cbc98ff874411c23139187de3ed72ec3401"
+      "sha256": "19ac51990f542c21948f4a65ecfb4f57e1e61dde1b496b80799ccae0ec0ac7df"
     },
     {
       "path": "scripts/browser-e2e.mjs",
-      "sha256": "de13e4054bb5cd6f14238864f853a82eca10039a912bfa142c1fc742465fcffb"
+      "sha256": "ea75a437f6ce6e83a1107cb98ea555d24fdb0429b7b82e2cdff65a7f47f386b7"
     },
     {
       "path": "scripts/compatibility-smoke.mjs",
-      "sha256": "285c8825959053ca4c47ac3647cf016231928f7897bfd0494f4f9ff78bc23ea5"
+      "sha256": "18a89394c75d18f232c663269f3e3f1fd06810b645ebaaa155251401ec7234d7"
     },
     {
       "path": "scripts/container-smoke.mjs",
-      "sha256": "1625fa5cda145ab90f64a9546ab001cbf8d352caeefe414ca7906fd089358fa3"
+      "sha256": "d4a09a8c69b59ad633473ac4ff9f41411e0cb8f274887e8e027892cee80b1567"
     },
     {
       "path": "scripts/fetch-native.mjs",
-      "sha256": "ac2bba3b2abedb955924deb484fe48f09c6dec50e5ed3456b52974637c3e8403"
+      "sha256": "5cef6f9df3267c91c5355a1930df293dfd5771d0e638e454d5e59281234b9286"
     },
     {
       "path": "scripts/init-relay.mjs",
-      "sha256": "9d5ca7e3f5d670d2e42a0785c3c091880b4d187c75487a7bf7ce12adf4384cde"
+      "sha256": "50e43d7fe6f5449bdcd28d41a3b0a5bdeb0128affa4270d3d246ed66bb480c3e"
     },
     {
       "path": "scripts/package-android.sh",
-      "sha256": "93ba76fa2b03277bbef9ba3054295690a71dab5fce249772514c70bb50e87152"
+      "sha256": "c28e60488968cea9657fbd5e178c685152215fdc28fd862885a8ab9b77aa26ab"
     },
     {
       "path": "scripts/package-distribution.mjs",
-      "sha256": "aca877518f539f5283c14e54839a63fb2230366bf2d4f49d37d81f1c605dfa83"
+      "sha256": "a63c7458969e6ba4530e3bf0878e2b6d4d3870c910fd75eb8a247ef467abee6d"
     },
     {
       "path": "scripts/release-smoke.mjs",
-      "sha256": "f238b8eea4ba1e00de7db818dabe32cb6c8fc04abecdfbfc9cdb1cf28f68f4af"
+      "sha256": "28af3b3ff8d585c86b6ca9c199818f177e6a5838a30a28a134235c2f83c3aa58"
     },
     {
       "path": "server.js",
-      "sha256": "acb02ecbe8c59720bec9d4f325a7651390bb37ee6a48aabd66c4d9a21d9ab5fa"
+      "sha256": "b9f3e284ff460087797e40fdf835ee1b297ea6be1558cdfcf1eebe717ade7f36"
     },
     {
       "path": "test/installer.test.js",
-      "sha256": "4c7677b4ecc36987e7f7372b217b9ae236f7aca1dde0432712881542e3bad2b3"
+      "sha256": "4964c9df49205f1db01dfe309042ca7b5a3071d506efe70fadd76ff6429d5518"
     },
     {
       "path": "test/server.test.js",
-      "sha256": "272a5c4efadfcc096f93819237dfef4af4d78a096d3ba63140228f3387331e74"
+      "sha256": "bdb1442fb1305c7ad8e40b544c6f1212548480e6c7357b570d0e02c4ad7984b3"
+    },
+    {
+      "path": "artifacts/nusa-vault-1.1.0.apk",
+      "sha256": "d762c85a21a13d3a2f5d64a3d71ce0c5ac1417e3027af2c62b67e275376b186d"
     },
     {
       "path": "artifacts/nusa-vault-1.0.0.apk",
@@ -238,28 +282,32 @@
       "sha256": "4dd740d793bb6b57e417a507a9c8f65bebda837d6efebdac4675bb4cbad2b3b1"
     },
     {
+      "path": "artifacts/nusa-vault-1.1.0.apk.sha256",
+      "sha256": "1954ae8e9db5f2179adaf1b3ae378dbabd4451a869aa4c87a37821caa111e44d"
+    },
+    {
       "path": "artifacts/apk-signature.txt",
       "sha256": "3ae2afc077c2c7fac93702fd1d8aeb7976029e5643ffa0d64107b293ef6ce631"
     },
     {
       "path": "artifacts/android-test-results.txt",
-      "sha256": "03a23db7510bae38fa85f1eed75fb05642c9a93362ebf7c3633433db799db111"
+      "sha256": "390d44a119d96cd00a3e6d6279e4e4a68fe8f83bf021bbd9f316f5392fe8aa61"
     },
     {
       "path": "artifacts/container-test-results.txt",
-      "sha256": "c6f2b938a87bae311c01aa62f0c1f28e5f91b79c0f6e844680e89b1608d218f0"
+      "sha256": "7c492632bbf64872bf141eb12313e05630d67bcda20a2c116bbb7d430378a4a5"
     },
     {
       "path": "artifacts/release-smoke-results.txt",
-      "sha256": "5727a0303d6403a7e29ecc0c8be82a511d002d28483c1a877314335b7ecf9196"
+      "sha256": "e6d82b7e65ed2cea562fa9102afe54765464df35c2b8e22f23b044f3ab5d9318"
     },
     {
       "path": "artifacts/compatibility-test-results.txt",
-      "sha256": "45f12db8141fb250dc90f57ae163a5d45ce3b25836112b678cfdf944da28b1d8"
+      "sha256": "21423417164ce64582f7b4a46bfcce8655304e5a74d6fc43237e2a4959fad781"
     },
     {
       "path": "artifacts/web-test-results.txt",
-      "sha256": "993dfd9231ea5bb6aacf7e5ab938b3a8ab672b66934c46f3d9de8564fb15c4fe"
+      "sha256": "73e128454dc45ebee44139b44c42c822b3880e4411bb9b808761dd7a9ed8ecdf"
     }
   ]
 }

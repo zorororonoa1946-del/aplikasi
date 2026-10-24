@@ -12,6 +12,12 @@ public final class GrantTestDocuments extends Activity {
     super.onCreate(state);
     grantUriPermission(
         "id.nusastudio.vault",
+        DocumentsContract.buildTreeDocumentUri("id.nusastudio.vault.testdocuments", "nested"),
+        Intent.FLAG_GRANT_READ_URI_PERMISSION
+            | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+            | Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
+    grantUriPermission(
+        "id.nusastudio.vault",
         DocumentsContract.buildTreeDocumentUri("id.nusastudio.vault.testdocuments", "root"),
         Intent.FLAG_GRANT_READ_URI_PERMISSION
             | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION

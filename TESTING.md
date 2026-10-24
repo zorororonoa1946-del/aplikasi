@@ -5,10 +5,12 @@
 - `npm test`: autentikasi relay, relay tanpa konfigurasi, validasi envelope, batas unggahan, round trip, penolakan overwrite, unggahan bersamaan, penghapusan. Tes helper installer juga memeriksa mode file kredensial 0600, tidak tercetaknya token, domain tidak valid, dan penolakan overwrite.
 - `npm run test:browser`: tampilan HP, impor/enkripsi, backup, pemulihan di browser laptop terpisah, kesamaan byte unduhan, penguncian, kata sandi salah.
 - `npm run test:android`: kompilasi dan instalasi APK app/test di emulator disposable; tes instrumentasi nyata, HTTPS relay dengan trust sertifikat localhost khusus tes, dan pemulihan hasil Android di browser laptop.
-- `scripts/android-build.sh lintRelease`: pemeriksaan statis Android. Build yang diserahkan memiliki 0 temuan lint debug maupun release; jangan menonaktifkan pemeriksaan kesalahan.
+- `scripts/android-build.sh lintRelease`: pemeriksaan statis Android. Jangan menonaktifkan pemeriksaan kesalahan. Peringatan ScopedStorage menjelaskan kebijakan Play Store bagi izin all-files; aplikasi didistribusikan sebagai APK pribadi. Hasil lint aktual dicatat dalam VALIDATION.md.
 - `scripts/package-android.sh`: build rilis, alignment APK, signature, verifikasi signature, dan checksum SHA-256.
 
-Tes Android menghapus data package `id.nusastudio.vault` hanya pada emulator. Gunakan perangkat emulator khusus pengujian. Hasil akhir native dan interoperabilitas ditulis ke `artifacts/android-test-results.txt` setelah seluruh pemeriksaan berhasil; file yang tidak ada tidak membuktikan tes lulus.
+Tes Android menghapus data package `id.nusastudio.vault` hanya pada emulator. Gunakan perangkat emulator khusus pengujian dan set NUSA_DISPOSABLE_EMULATOR=1; runner menolak tanpa flag ini atau pada perangkat fisik. Hasil akhir native dan interoperabilitas ditulis ke `artifacts/android-test-results.txt` setelah seluruh pemeriksaan berhasil; file yang tidak ada tidak membuktikan tes lulus.
+
+Tambahan regresi rilis 1.1.0: `npm test` memeriksa kuota, chunk immutable, hash/AAD, HTTPS LAN dan restore CLI 25 MiB. Tes browser memeriksa file 25 MiB, SHA-256, backup v1, navigasi folder dan perbaikan chunk rusak. Tes native mencakup transfer besar/resume, beberapa sumber, pemulihan korupsi, pilihan CA dan persetujuan dialog. `npm run test:compatibility` memeriksa APK produksi serta upgrade bertanda tangan 1.0.0 ke 1.1.0 tanpa menghapus data. Pengujian upgrade memerlukan APK baseline di artifacts (atau NUSA_PREVIOUS_APK).
 
 ## Perangkat fisik — checklist penerimaan
 
@@ -17,7 +19,7 @@ Tes ini memerlukan pemilik perangkat dan belum dapat digantikan emulator untuk k
 1. Cocokkan SHA-256 APK dengan checksum, instal APK rilis, buka company profile, dan pastikan vault tidak tampil sebelum trigger serta kata sandi.
 2. Buat vault baru. Salah kata sandi harus ditolak. Kunci, pindah aplikasi, dan tunggu idle >3 menit; vault harus kembali terkunci.
 3. Impor file lewat pemilih Android. Batalkan pemilihan, coba izin ditolak/dicabut, file kosong, Unicode pada nama, dan file yang melebihi 20 MiB. File sumber harus tetap utuh.
-4. Pilih folder yang memang dapat dipilih Android dan berisi subfolder. Uji pemindaian ulang, file baru, file berubah, file hilang, serta izin folder yang dicabut. Kegagalan harus dilaporkan dan backup sebelumnya tetap ada.
+4. Uji izin seluruh penyimpanan bersama: batal, tolak, setujui, cabut kembali; file privat/sistem harus tetap dibatasi. Pilih folder yang memang dapat dipilih Android dan berisi subfolder. Uji pemindaian ulang, file baru, file berubah, file hilang, serta izin folder yang dicabut. Kegagalan harus dilaporkan dan backup sebelumnya tetap ada.
 5. Konfigurasi relay HTTPS dan token. Coba token salah, sertifikat tidak tepercaya, jaringan putus, serta retry. Backup yang sudah ada tidak boleh ditimpa dengan isi berbeda.
 6. Pulihkan di laptop dengan kata sandi yang sama, unduh file, dan bandingkan checksum dengan sumber. Coba kata sandi berbeda; dekripsi harus gagal.
 7. Aktifkan backup otomatis dengan persetujuan eksplisit. Uji jaringan sesuai pilihan, jadwal tertunda karena baterai, notifikasi, reboot, dan force-stop. Menonaktifkan backup harus membatalkan job serta menghapus kata sandi background dari pengaturan terenkripsi.

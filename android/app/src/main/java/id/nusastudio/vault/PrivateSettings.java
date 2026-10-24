@@ -77,7 +77,7 @@ public final class PrivateSettings {
                     .format(new java.util.Date())
                 + " · "
                 + message);
-        if (old != null) for (int i = 0; i < Math.min(old.length(), 49); i++) next.put(old.get(i));
+        if (old != null) for (int i = 0; i < Math.min(old.length(), 499); i++) next.put(old.get(i));
         value.put("history", next);
         write(value);
       } catch (Exception ignored) {

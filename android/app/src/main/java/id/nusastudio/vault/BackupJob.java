@@ -45,15 +45,23 @@ public class BackupJob extends JobService {
                 pass = config.getString("backgroundPassword").toCharArray();
                 VaultStore store = new VaultStore(this);
                 store.unlock(pass);
-                String folder = config.optString("folder");
-                if (!folder.isEmpty()) store.importTree(android.net.Uri.parse(folder), pass);
+                int sourceFailures = BackupPlan.scan(this, store, pass);
                 int count =
-                    new RelayClient(config.getString("relay"), config.getString("token"))
-                        .backup(store);
+                    new RelayClient(
+                            config.getString("relay"),
+                            config.getString("token"),
+                            config.optString("relayCa"))
+                        .backup(store, pass);
+                if (sourceFailures > 0)
+                  throw new java.io.IOException(
+                      count
+                          + " file tersalin tetapi "
+                          + sourceFailures
+                          + " sumber perlu diperiksa");
                 settings.log("Backup otomatis selesai: " + count + " file");
                 notifyResult("Backup selesai", count + " file tersimpan di relay pribadi.");
               } catch (Exception e) {
-                retry = true;
+                retry = !Thread.currentThread().isInterrupted();
                 settings.log(
                     "Backup otomatis gagal; periksa koneksi, izin folder, dan pengaturan relay");
                 notifyResult(

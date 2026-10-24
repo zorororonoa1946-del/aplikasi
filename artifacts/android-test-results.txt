@@ -28,6 +28,21 @@ INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_STATUS: stream=PASS SAF folder recursion and unchanged-file deduplication
 
 INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS large file exceeds legacy 20 MiB limit with bounded-memory streaming and resumable HTTPS backup
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS selected local certificate is honored and unrelated CA is rejected
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS multiple selected sources preserve legacy configuration and continue past a bad source
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS shared storage requires consent and scans owner-approved primary storage
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS modified chunk is rejected and restored from immutable relay backup
+
+INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_STATUS: stream=PASS company profile and locked UI
 
 INSTRUMENTATION_STATUS_CODE: 0
@@ -40,7 +55,13 @@ INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_STATUS: stream=PASS lock returns to company profile
 
 INSTRUMENTATION_STATUS_CODE: 0
-INSTRUMENTATION_RESULT: passed=14
+INSTRUMENTATION_STATUS: stream=PASS certificate picker result requires explicit owner approval before trust changes
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS locking dismisses pending certificate trust without accepting it
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: passed=21
 INSTRUMENTATION_RESULT: stream=
 PASS AES-GCM round trip & randomized encryption
 PASS wrong password and tamper rejection
@@ -52,12 +73,19 @@ PASS cleartext and credential-bearing relay rejection
 PASS Android JobScheduler opt-in and cancellation
 PASS scheduled background backup actually executes
 PASS SAF folder recursion and unchanged-file deduplication
+PASS large file exceeds legacy 20 MiB limit with bounded-memory streaming and resumable HTTPS backup
+PASS selected local certificate is honored and unrelated CA is rejected
+PASS multiple selected sources preserve legacy configuration and continue past a bad source
+PASS shared storage requires consent and scans owner-approved primary storage
+PASS modified chunk is rejected and restored from immutable relay backup
 PASS company profile and locked UI
 PASS seven taps opens password dialog
 PASS password unlocks actual native file manager
 PASS lock returns to company profile
+PASS certificate picker result requires explicit owner approval before trust changes
+PASS locking dismisses pending certificate trust without accepting it
 
-Tests passed: 14
+Tests passed: 21
 
 INSTRUMENTATION_CODE: -1
 

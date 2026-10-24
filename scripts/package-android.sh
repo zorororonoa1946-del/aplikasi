@@ -2,6 +2,9 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 scripts/android-build.sh assembleRelease lintRelease
+version="$(node -p 'require("./package.json").version')"
+[[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
+apk="artifacts/nusa-vault-${version}.apk"
 sdk="${ANDROID_HOME:-/workspace/toolchains/android-sdk}"
 unsigned=android/app/build/outputs/apk/release/app-release-unsigned.apk
 apk_files="$("$sdk/build-tools/35.0.0/aapt" list "$unsigned")"
@@ -28,9 +31,9 @@ if [[ ! -f "$signing_dir/release.p12" ]]; then
  chmod 600 "$signing_dir/release.p12"
 fi
 "$sdk/build-tools/35.0.0/zipalign" -f -p 4 android/app/build/outputs/apk/release/app-release-unsigned.apk artifacts/nusa-unsigned-aligned.apk
-"$sdk/build-tools/35.0.0/apksigner" sign --ks "$signing_dir/release.p12" --ks-key-alias nusa --ks-pass env:NUSA_KEYSTORE_PASSWORD --key-pass env:NUSA_KEYSTORE_PASSWORD --out artifacts/nusa-vault-1.0.0.apk artifacts/nusa-unsigned-aligned.apk
-"$sdk/build-tools/35.0.0/apksigner" verify --verbose --print-certs artifacts/nusa-vault-1.0.0.apk > artifacts/apk-signature.txt
+"$sdk/build-tools/35.0.0/apksigner" sign --ks "$signing_dir/release.p12" --ks-key-alias nusa --ks-pass env:NUSA_KEYSTORE_PASSWORD --key-pass env:NUSA_KEYSTORE_PASSWORD --out "$apk" artifacts/nusa-unsigned-aligned.apk
+"$sdk/build-tools/35.0.0/apksigner" verify --verbose --print-certs "$apk" > artifacts/apk-signature.txt
 rm artifacts/nusa-unsigned-aligned.apk
-sha256sum artifacts/nusa-vault-1.0.0.apk > artifacts/nusa-vault-1.0.0.apk.sha256
+sha256sum "$apk" > "${apk}.sha256"
 unset NUSA_KEYSTORE_PASSWORD
-printf 'Signed APK: artifacts/nusa-vault-1.0.0.apk\nBack up your private signing directory securely: %s\n' "$signing_dir"
+printf 'Signed APK: %s\nBack up your private signing directory securely: %s\n' "$apk" "$signing_dir"

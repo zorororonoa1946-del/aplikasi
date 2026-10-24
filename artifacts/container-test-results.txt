@@ -1,2 +1,2 @@
-2026-10-24T02:53:00.761Z
+2026-10-24T05:03:04.020Z
 PASS Docker build; nonroot read-only relay; authentication; persistent volume across restart; Compose validation; Caddy HTTPS configuration validation. Public DNS/ACME deployment not exercised.

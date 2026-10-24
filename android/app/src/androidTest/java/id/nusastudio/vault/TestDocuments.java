@@ -45,6 +45,7 @@ public final class TestDocuments extends DocumentsProvider {
       case "root" -> new Object[] {id, "Test folder", DocumentsContract.Document.MIME_TYPE_DIR, 0};
       case "nested" -> new Object[] {id, "Subfolder", DocumentsContract.Document.MIME_TYPE_DIR, 0};
       case "a" -> new Object[] {id, "a.txt", "text/plain", 13};
+      case "cert" -> new Object[] {id, "ca.pem", "application/x-pem-file", 2048};
       case "b" -> new Object[] {id, "b.txt", "text/plain", 13};
       default -> throw new FileNotFoundException();
     };
@@ -72,17 +73,34 @@ public final class TestDocuments extends DocumentsProvider {
   @Override
   public boolean isChildDocument(String parent, String child) {
     return parent.equals("root")
-            && (child.equals("a") || child.equals("b") || child.equals("nested"))
+            && (child.equals("a")
+                || child.equals("b")
+                || child.equals("cert")
+                || child.equals("nested"))
         || parent.equals("nested") && child.equals("b");
   }
 
   @Override
   public ParcelFileDescriptor openDocument(String id, String mode, CancellationSignal cancellation)
       throws FileNotFoundException {
-    if (!mode.equals("r") || !(id.equals("a") || id.equals("b"))) throw new FileNotFoundException();
+    if (!mode.equals("r") || !(id.equals("a") || id.equals("b") || id.equals("cert")))
+      throw new FileNotFoundException();
     File file = new File(getContext().getCacheDir(), "synthetic-" + id);
     try (FileOutputStream out = new FileOutputStream(file)) {
-      out.write(("test-folder-" + id).getBytes(StandardCharsets.UTF_8));
+      if (id.equals("cert")) {
+        try {
+          android.content.Context target =
+              getContext().createPackageContext("id.nusastudio.vault", 0);
+          int raw = target.getResources().getIdentifier("test_ca", "raw", "id.nusastudio.vault");
+          try (java.io.InputStream input = target.getResources().openRawResource(raw)) {
+            byte[] buffer = new byte[4096];
+            int n;
+            while ((n = input.read(buffer)) != -1) out.write(buffer, 0, n);
+          }
+        } catch (Exception error) {
+          throw new java.io.IOException(error);
+        }
+      } else out.write(("test-folder-" + id).getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
       throw new FileNotFoundException(e.getMessage());
     }

@@ -1,9 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  <uses-permission android:name="android.permission.INTERNET"/>
+ <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+ <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="29"/>
  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
- <application android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:label="Nusa Studio" android:icon="@drawable/ic_nusa" android:theme="@style/AppTheme" android:usesCleartextTraffic="false" android:supportsRtl="true">
+ <application android:requestLegacyExternalStorage="true" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:label="Nusa Studio" android:icon="@drawable/ic_nusa" android:theme="@style/AppTheme" android:usesCleartextTraffic="false" android:supportsRtl="true">
   <activity android:name=".MainActivity" android:exported="true">
    <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
   </activity>

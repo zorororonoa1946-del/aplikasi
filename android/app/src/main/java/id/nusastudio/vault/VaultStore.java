@@ -8,14 +8,22 @@ import android.provider.OpenableColumns;
 import android.util.AtomicFile;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
+import java.security.*;
 import java.util.*;
-import org.json.JSONObject;
+import javax.crypto.Cipher;
+import javax.crypto.spec.*;
+import org.json.*;
 
 public final class VaultStore {
-  public static final int MAX_FILE_BYTES = 20 * 1024 * 1024;
+  public static final int CHUNK_BYTES = 4 * 1024 * 1024;
+  private static final String UUID_PATTERN =
+      "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}";
   private final Context context;
   private final File directory;
+  private final Map<String, String> sourceIndex = new HashMap<>();
+  private boolean indexed;
+  private boolean catalogLoaded, catalogDirty;
+  private final Map<String, JSONObject> catalog = new LinkedHashMap<>();
 
   public VaultStore(Context context) {
     this.context = context.getApplicationContext();
@@ -25,8 +33,26 @@ public final class VaultStore {
   }
 
   private File file(String id) throws Exception {
-    if (!id.equals("check") && !id.matches("[a-f0-9-]{36}")) throw new Exception("ID tidak valid");
+    if (!id.equals("check") && !id.equals("catalog") && !id.matches(UUID_PATTERN))
+      throw new Exception("ID tidak valid");
     return new File(directory, id + ".json");
+  }
+
+  public File chunk(String id, int index) throws Exception {
+    file(id);
+    if (!id.matches(UUID_PATTERN) || index < 0) throw new Exception("ID chunk salah");
+    return new File(new File(new File(directory, "chunks"), id), index + ".bin");
+  }
+
+  public synchronized void clearSession() {
+    catalog.clear();
+    sourceIndex.clear();
+    catalogLoaded = false;
+    indexed = false;
+  }
+
+  public void log(String message) {
+    new PrivateSettings(context).log(message);
   }
 
   public boolean initialized() {
@@ -49,17 +75,27 @@ public final class VaultStore {
             StandardCharsets.UTF_8));
   }
 
-  public synchronized void write(String id, JSONObject value) throws Exception {
-    AtomicFile atomic = new AtomicFile(file(id));
-    FileOutputStream stream = null;
+  private void atomic(File destination, byte[] bytes) throws Exception {
+    File parent = destination.getParentFile();
+    if (!parent.isDirectory() && !parent.mkdirs())
+      throw new IOException("Penyimpanan penuh/tidak tersedia");
+    AtomicFile a = new AtomicFile(destination);
+    FileOutputStream out = null;
     try {
-      stream = atomic.startWrite();
-      stream.write(value.toString().getBytes(StandardCharsets.UTF_8));
-      atomic.finishWrite(stream);
+      out = a.startWrite();
+      out.write(bytes);
+      a.finishWrite(out);
     } catch (Exception e) {
-      if (stream != null) atomic.failWrite(stream);
+      if (out != null) a.failWrite(out);
       throw e;
     }
+  }
+
+  public synchronized void write(String id, JSONObject value) throws Exception {
+    atomic(file(id), value.toString().getBytes(StandardCharsets.UTF_8));
+    indexed = false;
+    catalogLoaded = false;
+    catalogDirty = true;
   }
 
   public List<String> ids() {
@@ -67,114 +103,374 @@ public final class VaultStore {
     String[] names = directory.list();
     if (names != null)
       for (String name : names)
-        if (name.matches("[a-f0-9-]{36}\\.json")) ids.add(name.substring(0, 36));
+        if (name.matches(UUID_PATTERN + "\\.json")) ids.add(name.substring(0, 36));
     Collections.sort(ids);
     return ids;
   }
 
-  public void delete(String id) throws Exception {
-    if (!file(id).delete()) throw new Exception("Tidak dapat menghapus file");
+  private static void removeTree(File path) {
+    File[] children = path.listFiles();
+    if (children != null) for (File child : children) removeTree(child);
+    path.delete();
   }
 
-  public List<JSONObject> list(char[] password) throws Exception {
-    List<JSONObject> result = new ArrayList<>();
-    for (String id : ids()) {
-      JSONObject value = VaultCrypto.decrypt(read(id), password);
-      value.remove("data");
-      value.put("id", id);
-      result.add(value);
+  public synchronized void delete(String id) throws Exception {
+    File target = file(id);
+    if (!target.exists()) throw new IOException("File tidak ditemukan");
+    new AtomicFile(target).delete();
+    removeTree(new File(new File(directory, "chunks"), id));
+    catalog.remove(id);
+    catalogDirty = true;
+    indexed = false;
+  }
+
+  public static void validate(JSONObject value, String id) throws Exception {
+    if (value.optString("name").isEmpty()
+        || !(value.get("size") instanceof Number)
+        || value.getDouble("size") != value.getLong("size")
+        || value.getLong("size") < 0
+        || value.getLong("size") > 9007199254740991L)
+      throw new IOException("Metadata ukuran/nama rusak");
+    java.time.Instant.parse(value.getString("date"));
+    if (value.optInt("format") == 2) {
+      long size = value.getLong("size");
+      JSONArray parts = value.getJSONArray("parts");
+      if (!id.equals(value.getString("fileId"))
+          || VaultCrypto.decode(value.getString("key")).length != 32
+          || value.getInt("chunkSize") != CHUNK_BYTES
+          || parts.length() != (size + CHUNK_BYTES - 1) / CHUNK_BYTES)
+        throw new IOException("Manifest chunk rusak");
+      for (int i = 0; i < parts.length(); i++) {
+        JSONObject part = parts.getJSONObject(i);
+        if (part.getInt("size") != Math.min(CHUNK_BYTES, size - (long) i * CHUNK_BYTES)
+            || VaultCrypto.decode(part.getString("iv")).length != 12
+            || VaultCrypto.decode(part.getString("sha256")).length != 32)
+          throw new IOException("Deskriptor chunk rusak");
+      }
+    } else if (VaultCrypto.decode(value.getString("data")).length != value.getLong("size"))
+      throw new IOException("Ukuran file tidak cocok");
+  }
+
+  private JSONObject catalogEntry(JSONObject value, String id) throws Exception {
+    JSONObject entry = new JSONObject().put("id", id);
+    for (String key :
+        new String[] {"name", "size", "date", "source", "hash", "format", "unreadable"})
+      if (value.has(key)) entry.put(key, value.get(key));
+    return entry;
+  }
+
+  private synchronized void loadCatalog(char[] password) throws Exception {
+    List<String> ids = ids();
+    java.util.HashSet<String> actual = new java.util.HashSet<>(ids);
+    if (catalogLoaded && actual.equals(catalog.keySet())) return;
+    catalog.clear();
+    try {
+      JSONObject saved = VaultCrypto.decrypt(read("catalog"), password);
+      if (!"catalog-v1".equals(saved.getString("type"))) throw new IOException();
+      JSONArray entries = saved.getJSONArray("files");
+      for (int i = 0; i < entries.length(); i++) {
+        JSONObject value = entries.getJSONObject(i);
+        String id = value.getString("id");
+        if (!id.matches(UUID_PATTERN) || value.optString("name").isEmpty()) throw new IOException();
+        catalog.put(id, value);
+      }
+      if (!actual.equals(catalog.keySet()) || catalog.size() != entries.length())
+        throw new IOException();
+      catalogLoaded = true;
+      catalogDirty = false;
+      return;
+    } catch (Exception stale) {
+      catalog.clear();
     }
+    for (String id : ids)
+      try {
+        JSONObject value = VaultCrypto.decrypt(read(id), password);
+        validate(value, id);
+        catalog.put(id, catalogEntry(value, id));
+      } catch (Exception error) {
+        catalog.put(
+            id,
+            new JSONObject()
+                .put("id", id)
+                .put("name", "File tidak dapat dibuka (" + id.substring(0, 8) + ")")
+                .put("size", 0)
+                .put("date", "")
+                .put("unreadable", true));
+      }
+    catalogLoaded = true;
+    catalogDirty = true;
+  }
+
+  public synchronized void flushCatalog(char[] password) throws Exception {
+    loadCatalog(password);
+    if (!catalogDirty) return;
+    JSONArray values = new JSONArray();
+    for (String id : ids()) values.put(catalog.get(id));
+    JSONObject encrypted =
+        VaultCrypto.encrypt(
+            new JSONObject().put("type", "catalog-v1").put("files", values), password);
+    atomic(file("catalog"), encrypted.toString().getBytes(StandardCharsets.UTF_8));
+    catalogDirty = false;
+  }
+
+  public synchronized void saveRecord(
+      String id, JSONObject envelope, JSONObject value, char[] password) throws Exception {
+    loadCatalog(password);
+    write(id, envelope);
+    catalog.put(id, catalogEntry(value, id));
+    catalogLoaded = true;
+    catalogDirty = true;
+  }
+
+  public synchronized List<JSONObject> list(char[] password) throws Exception {
+    loadCatalog(password);
+    flushCatalog(password);
+    List<JSONObject> result = new ArrayList<>();
+    for (String id : ids()) result.add(new JSONObject(catalog.get(id).toString()));
     return result;
+  }
+
+  private void index(char[] password) throws Exception {
+    if (indexed) return;
+    sourceIndex.clear();
+    for (JSONObject v : list(password))
+      if (!v.optBoolean("unreadable") && !v.optString("source").isEmpty())
+        sourceIndex.put(
+            v.getString("source") + '\0' + v.getString("name") + '\0' + v.optString("hash"),
+            v.getString("id"));
+    indexed = true;
+  }
+
+  public static byte[] cryptChunk(
+      int mode, byte[] key, String id, int index, byte[] iv, byte[] bytes) throws Exception {
+    Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+    cipher.init(mode, new SecretKeySpec(key, "AES"), new GCMParameterSpec(128, iv));
+    cipher.updateAAD(("nusa-v2:" + id + ":" + index).getBytes(StandardCharsets.UTF_8));
+    return cipher.doFinal(bytes);
+  }
+
+  public synchronized String importStream(
+      String name, InputStream source, String sourceId, char[] password) throws Exception {
+    String id = UUID.randomUUID().toString();
+    byte[] key = new byte[32];
+    new SecureRandom().nextBytes(key);
+    JSONArray parts = new JSONArray();
+    MessageDigest hash = MessageDigest.getInstance("SHA-256");
+    long total = 0;
+    boolean committed = false;
+    byte[] buffer = new byte[CHUNK_BYTES];
+    try (InputStream input = source) {
+      if (input == null) throw new IOException("File tidak dapat dibaca");
+      index(password);
+      while (true) {
+        int count = 0, n;
+        while (count < buffer.length
+            && (n = input.read(buffer, count, buffer.length - count)) != -1) {
+          if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
+          count += n;
+        }
+        if (count == 0) break;
+        hash.update(buffer, 0, count);
+        byte[] iv = new byte[12];
+        new SecureRandom().nextBytes(iv);
+        byte[] plain = Arrays.copyOf(buffer, count);
+        byte[] encrypted;
+        try {
+          encrypted = cryptChunk(Cipher.ENCRYPT_MODE, key, id, parts.length(), iv, plain);
+        } finally {
+          Arrays.fill(plain, (byte) 0);
+        }
+        atomic(chunk(id, parts.length()), encrypted);
+        parts.put(
+            new JSONObject()
+                .put("iv", VaultCrypto.encode(iv))
+                .put("size", count)
+                .put(
+                    "sha256",
+                    VaultCrypto.encode(MessageDigest.getInstance("SHA-256").digest(encrypted))));
+        total += count;
+        if (count < buffer.length) break;
+      }
+      Arrays.fill(buffer, (byte) 0);
+      String fingerprint = VaultCrypto.encode(hash.digest()),
+          existing = sourceIndex.get(sourceId + '\0' + name + '\0' + fingerprint);
+      if (existing != null && healthy(existing, password)) {
+        removeTree(new File(new File(directory, "chunks"), id));
+        return existing;
+      }
+      JSONObject metadata =
+          new JSONObject()
+              .put("format", 2)
+              .put("fileId", id)
+              .put("chunkSize", CHUNK_BYTES)
+              .put("key", VaultCrypto.encode(key))
+              .put("parts", parts)
+              .put("name", name)
+              .put("size", total)
+              .put("date", java.time.Instant.now().toString())
+              .put("source", sourceId)
+              .put("hash", fingerprint);
+      saveRecord(id, VaultCrypto.encrypt(metadata, password), metadata, password);
+      committed = true;
+      sourceIndex.put(sourceId + '\0' + name + '\0' + fingerprint, id);
+      indexed = true;
+      log("Diimpor: " + name + " (" + total + " byte)");
+      return id;
+    } finally {
+      Arrays.fill(key, (byte) 0);
+      Arrays.fill(buffer, (byte) 0);
+      if (!committed) removeTree(new File(new File(directory, "chunks"), id));
+    }
   }
 
   public String importBytes(String name, byte[] data, String source, char[] password)
       throws Exception {
-    if (data.length > MAX_FILE_BYTES) throw new Exception("Batas file 20 MB");
-    String hash = VaultCrypto.encode(MessageDigest.getInstance("SHA-256").digest(data));
-    if (!source.isEmpty())
-      for (JSONObject previous : list(password))
-        if (source.equals(previous.optString("source")) && hash.equals(previous.optString("hash")))
-          return previous.getString("id");
-    JSONObject value =
-        new JSONObject()
-            .put("name", name)
-            .put("size", data.length)
-            .put("date", java.time.Instant.now().toString())
-            .put("data", VaultCrypto.encode(data))
-            .put("source", source)
-            .put("hash", hash);
-    String id = UUID.randomUUID().toString();
-    write(id, VaultCrypto.encrypt(value, password));
-    return id;
+    return importStream(name, new ByteArrayInputStream(data), source, password);
   }
 
   public void importUri(Uri uri, String relative, char[] password) throws Exception {
     String name = relative;
-    if (name == null) {
+    if (name == null)
       try (Cursor c =
           context
               .getContentResolver()
               .query(uri, new String[] {OpenableColumns.DISPLAY_NAME}, null, null, null)) {
         name = c != null && c.moveToFirst() ? c.getString(0) : "file";
       }
-    }
-    byte[] bytes = readLimited(context.getContentResolver().openInputStream(uri), MAX_FILE_BYTES);
+    importStream(name, context.getContentResolver().openInputStream(uri), uri.toString(), password);
+  }
+
+  public boolean healthy(String id, char[] pass) {
     try {
-      importBytes(name, bytes, uri.toString(), password);
+      JSONObject value = VaultCrypto.decrypt(read(id), pass);
+      validate(value, id);
+      if (value.optInt("format") == 2) {
+        JSONArray parts = value.getJSONArray("parts");
+        for (int i = 0; i < parts.length(); i++) {
+          byte[] cipher = readLimited(new FileInputStream(chunk(id, i)), CHUNK_BYTES + 16);
+          if (!MessageDigest.isEqual(
+              VaultCrypto.decode(parts.getJSONObject(i).getString("sha256")),
+              MessageDigest.getInstance("SHA-256").digest(cipher))) return false;
+        }
+      }
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  public void copyTo(String id, char[] pass, OutputStream output) throws Exception {
+    JSONObject v = VaultCrypto.decrypt(read(id), pass);
+    validate(v, id);
+    if (v.optInt("format") != 2) {
+      byte[] data = VaultCrypto.decode(v.getString("data"));
+      try {
+        output.write(data);
+      } finally {
+        Arrays.fill(data, (byte) 0);
+      }
+      return;
+    }
+    byte[] key = VaultCrypto.decode(v.getString("key"));
+    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+    long total = 0;
+    try {
+      JSONArray parts = v.getJSONArray("parts");
+      for (int i = 0; i < parts.length(); i++) {
+        if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
+        JSONObject part = parts.getJSONObject(i);
+        byte[] cipher = readLimited(new FileInputStream(chunk(id, i)), CHUNK_BYTES + 16);
+        if (!MessageDigest.isEqual(
+            VaultCrypto.decode(part.getString("sha256")),
+            MessageDigest.getInstance("SHA-256").digest(cipher)))
+          throw new IOException("Checksum chunk salah");
+        byte[] plain =
+            cryptChunk(
+                Cipher.DECRYPT_MODE, key, id, i, VaultCrypto.decode(part.getString("iv")), cipher);
+        try {
+          if (plain.length != part.getInt("size")) throw new IOException("Ukuran chunk salah");
+          digest.update(plain);
+          output.write(plain);
+          total += plain.length;
+        } finally {
+          Arrays.fill(plain, (byte) 0);
+        }
+      }
+      if (total != v.getLong("size")) throw new IOException("Ukuran hasil tidak cocok");
+      if (v.has("hash")
+          && !v.getString("hash").isEmpty()
+          && !MessageDigest.isEqual(VaultCrypto.decode(v.getString("hash")), digest.digest()))
+        throw new IOException("Checksum file salah");
     } finally {
-      Arrays.fill(bytes, (byte) 0);
+      Arrays.fill(key, (byte) 0);
     }
   }
 
   public int importTree(Uri tree, char[] password) throws Exception {
-    return scan(tree, DocumentsContract.getTreeDocumentId(tree), "", password, 0, new HashSet<>());
-  }
-
-  private int scan(Uri tree, String id, String prefix, char[] password, int depth, Set<String> seen)
-      throws Exception {
-    if (depth > 32 || !seen.add(id)) throw new Exception("Folder terlalu dalam atau berulang");
-    int count = 0;
-    Uri children = DocumentsContract.buildChildDocumentsUriUsingTree(tree, id);
-    try (Cursor cursor =
-        context
-            .getContentResolver()
-            .query(
-                children,
-                new String[] {
-                  DocumentsContract.Document.COLUMN_DOCUMENT_ID,
-                  DocumentsContract.Document.COLUMN_DISPLAY_NAME,
-                  DocumentsContract.Document.COLUMN_MIME_TYPE
-                },
-                null,
-                null,
-                null)) {
-      if (cursor == null) throw new Exception("Folder tidak dapat dibaca");
-      while (cursor.moveToNext()) {
-        if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
-        String child = cursor.getString(0), name = prefix + cursor.getString(1);
-        if (DocumentsContract.Document.MIME_TYPE_DIR.equals(cursor.getString(2)))
-          count += scan(tree, child, name + "/", password, depth + 1, seen);
-        else {
-          importUri(DocumentsContract.buildDocumentUriUsingTree(tree, child), name, password);
-          count++;
+    ArrayDeque<String[]> pending = new ArrayDeque<>();
+    Set<String> seen = new HashSet<>();
+    String root = DocumentsContract.getTreeDocumentId(tree);
+    pending.push(new String[] {root, ""});
+    int count = 0, failed = 0;
+    while (!pending.isEmpty()) {
+      String[] current = pending.pop();
+      if (!seen.add(current[0])) continue;
+      try (Cursor c =
+          context
+              .getContentResolver()
+              .query(
+                  DocumentsContract.buildChildDocumentsUriUsingTree(tree, current[0]),
+                  new String[] {
+                    DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                    DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                    DocumentsContract.Document.COLUMN_MIME_TYPE
+                  },
+                  null,
+                  null,
+                  null)) {
+        if (c == null) throw new IOException("Folder tidak dapat dibaca");
+        while (c.moveToNext()) {
+          if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
+          String child = c.getString(0), name = current[1] + c.getString(1);
+          if (DocumentsContract.Document.MIME_TYPE_DIR.equals(c.getString(2)))
+            pending.push(new String[] {child, name + "/"});
+          else
+            try {
+              importUri(DocumentsContract.buildDocumentUriUsingTree(tree, child), name, password);
+              count++;
+            } catch (Exception e) {
+              if (e instanceof InterruptedException) throw e;
+              failed++;
+              log("Gagal impor: " + name + " — " + e.getClass().getSimpleName());
+            }
         }
+      } catch (Exception e) {
+        if (e instanceof InterruptedException) throw e;
+        failed++;
+        log("Gagal baca folder: " + current[1] + " — " + e.getClass().getSimpleName());
       }
     }
+    if (failed > 0)
+      throw new IOException(
+          count
+              + " file diproses, "
+              + failed
+              + " sumber gagal; salinan yang berhasil tetap disimpan");
     return count;
   }
 
-  static byte[] readLimited(InputStream input, int limit) throws Exception {
+  public static byte[] readLimited(InputStream input, int limit) throws Exception {
     if (input == null) throw new IOException("File tidak dapat dibaca");
     try (InputStream stream = input;
-        ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream()) {
       byte[] buffer = new byte[16384];
       int total = 0, n;
       while ((n = stream.read(buffer)) != -1) {
         total += n;
-        if (total > limit) throw new IOException("Batas ukuran file terlampaui");
-        output.write(buffer, 0, n);
+        if (total > limit) throw new IOException("Batas ukuran data terlampaui");
+        out.write(buffer, 0, n);
       }
-      return output.toByteArray();
+      return out.toByteArray();
     }
   }
 }

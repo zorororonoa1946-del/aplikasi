@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
     environment:
       RELAY_TOKEN: ${RELAY_TOKEN:?Run npm run relay:init first}
+      MAX_STORAGE_BYTES: ${MAX_STORAGE_BYTES:-10737418240}
     volumes:
       - vault-data:/data
     read_only: true

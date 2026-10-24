@@ -27,3 +27,9 @@ artifacts/distribution-manifest.json
 !artifacts/distribution-manifest.json
 !artifacts/company.png
 !artifacts/vault.png
+
+# Reviewed audit release.
+!artifacts/nusa-vault-1.1.0.apk
+!artifacts/nusa-vault-1.1.0.apk.sha256
+!artifacts/nusa-vault-installation-1.1.0.zip
+!artifacts/nusa-vault-installation-1.1.0.zip.sha256

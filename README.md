@@ -2,23 +2,23 @@
 
 Aplikasi Android native dan companion browser untuk vault pribadi serta backup satu arah ke relay milik sendiri. Halaman awal berupa company profile Nusa Studio. Ketuk logo **nusa 7 kali dalam 3 detik**, lalu buat/buka vault dengan kata sandi minimal 12 karakter. Tidak ada kata sandi bawaan.
 
-Unduhan lengkap: `artifacts/nusa-vault-installation-1.0.0.zip`. Mulai dari INSTALL.md; hasil pengujian dan batas verifikasinya ada di VALIDATION.md.
+Unduhan lengkap: `artifacts/nusa-vault-installation-1.1.0.zip`. Mulai dari INSTALL.md; hasil pengujian dan batas verifikasinya ada di VALIDATION.md.
 
 ## Paket Android
 
 - Minimum Android 8.0 / API 26; target Android 15 / API 35.
-- APK rilis: `artifacts/nusa-vault-1.0.0.apk`, tersedia setelah `scripts/package-android.sh` berhasil. Checksum dan informasi signature ada di direktori yang sama.
-- Instal APK melalui file manager Android dan izinkan instalasi dari sumber tersebut, atau gunakan `adb install -r artifacts/nusa-vault-1.0.0.apk`.
+- APK rilis: `artifacts/nusa-vault-1.1.0.apk`, tersedia setelah `scripts/package-android.sh` berhasil. Checksum dan informasi signature ada di direktori yang sama.
+- Instal APK melalui file manager Android dan izinkan instalasi dari sumber tersebut, atau gunakan `adb install -r artifacts/nusa-vault-1.1.0.apk`.
 - Build debug dan rilis memakai tanda tangan berbeda. Beralih dari debug ke rilis memerlukan uninstall; **backup dan uji pemulihan sebelum uninstall**, karena uninstall menghapus vault lokal dan pengaturan.
 
 ## Menggunakan Android
 
 1. Buka Nusa Studio, ketuk logo 7 kali, dan buat kata sandi vault. Simpan kata sandi secara aman: tidak ada reset atau recovery key.
-2. Pilih file atau folder melalui pemilih dokumen Android. Aplikasi meminta akses hanya ke pilihan itu. Saat kembali dari pemilih file, masukkan kata sandi kembali bila vault telah terkunci.
+2. Pilih file atau folder melalui pemilih dokumen Android. Beberapa file/folder dapat menjadi sumber otomatis. Opsional, pilih seluruh penyimpanan bersama dan setujui izin khusus Android; izin ini tidak membuka data privat aplikasi lain. Saat kembali dari pemilih file, masukkan kata sandi kembali bila vault telah terkunci.
 3. Di Pengaturan relay, masukkan origin HTTPS relay pribadi, misalnya `https://vault.domain-anda.com`, dan token relay terpisah dari kata sandi vault.
-4. Pilih **Backup sekarang**. Untuk folder, aplikasi memeriksa isi folder lagi; versi dengan isi berubah disimpan sebagai backup baru. File sumber tidak dihapus atau ditimpa.
+4. Pilih **Backup sekarang**. Aplikasi memeriksa ulang semua sumber file/folder yang dipilih; versi dengan isi berubah disimpan sebagai backup baru. File sumber tidak dihapus atau ditimpa.
 5. Opsional: aktifkan backup otomatis dan pilih hanya jaringan tanpa batas kuota. Pengguna menyetujui penyimpanan kata sandi background dalam Android Keystore. Android menjalankan tugas sekitar setiap 15 menit atau menundanya sesuai baterai, jaringan, dan kebijakan perangkat. Force-stop menghentikan tugas sampai aplikasi dibuka kembali.
-6. Gunakan pencarian, Simpan salinan, Hapus lokal, dan Riwayat backup. Hapus lokal tidak menghapus backup relay. Simpan salinan menulis **plaintext** ke lokasi pilihan pengguna.
+6. Gunakan navigasi folder, pencarian, Simpan salinan, Hapus lokal, dan Riwayat backup. Hapus lokal tidak menghapus backup relay. Simpan salinan menulis **plaintext** ke lokasi pilihan pengguna.
 
 Vault terkunci setelah 3 menit idle dan saat Activity masuk background. Tampilan vault dilindungi `FLAG_SECURE` dari screenshot serta thumbnail recent apps. Izin notifikasi memungkinkan laporan aktivitas backup; aplikasi tidak mengakses SMS, lokasi, notifikasi aplikasi lain, atau remote control.
 
@@ -35,7 +35,25 @@ Server pengembangan mendengarkan localhost port 3000. `RELAY_TOKEN` acak minimal
 
 Untuk memulihkan di laptop, buka origin HTTPS relay yang sama, ketuk logo 7 kali, gunakan **kata sandi vault yang sama dengan Android**, isi token relay, lalu pilih Pulihkan dari relay. File Android dan browser memakai format enkripsi yang kompatibel. Unduh mengeluarkan salinan plaintext. IndexedDB browser hanya menyimpan envelope terenkripsi. Token dan kata sandi browser hanya berada dalam memori sesi.
 
-Environment opsional: `PORT` (3000), `HOST` (127.0.0.1), `DATA_DIR` (`.vault-data` relatif direktori kerja). Proses server perlu dimulai ulang setelah task/cloud machine direstorasi.
+Environment opsional: `PORT` (3000), `HOST` (127.0.0.1), `DATA_DIR` (`.vault-data` relatif direktori kerja), `MAX_STORAGE_BYTES` (10 GiB). Kuota penuh menolak unggahan baru dengan HTTP 507 dan mempertahankan backup sebelumnya. `TLS_CERT_FILE` dan `TLS_KEY_FILE` mengaktifkan HTTPS langsung. Proses server perlu dimulai ulang setelah task/cloud machine direstorasi.
+
+## Tanpa VPS: relay HTTPS di laptop melalui WiFi
+
+Pasang Node.js >=22 dan OpenSSL. Hubungkan HP/laptop ke jaringan yang sama, cari IPv4 pribadi laptop, lalu jalankan:
+
+```sh
+npm run relay:local -- 192.168.1.10
+```
+
+Ganti IP contoh dengan IP laptop. Helper membuat identitas TLS privat dan token di `.local/local-relay`; token hanya ada di `connection.txt`, tidak dicetak ke terminal. Izinkan koneksi LAN ke TCP 3443 pada firewall laptop. Di Android, masukkan alamat/token tersebut dan impor **sertifikat publik `ca.pem`** melalui pengaturan relay. Cocokkan fingerprint SHA-256 dengan laptop sebelum menyetujui. Jangan salin `ca-key.pem` atau `server-key.pem` ke HP. Sertifikat dipercaya khusus koneksi relay aplikasi; hostname tetap diperiksa.
+
+Untuk companion browser, pasang CA publik itu sebagai CA tepercaya di browser/sistem laptop sesuai pengaturan browser Anda, lalu buka `https://192.168.1.10:3443`. Alternatif tanpa memasang CA ke sistem: gunakan helper restore berikut; ia mempercayai hanya CA yang Anda berikan. Jangan melewati peringatan TLS atau menonaktifkan verifikasi sertifikat.
+
+```sh
+npm run restore -- --connection .local/local-relay/connection.txt --ca .local/local-relay/ca.pem --out restored-vault
+```
+
+Kata sandi diminta tanpa ditampilkan. Helper menulis salinan plaintext secara streaming setelah verifikasi, mempertahankan folder/versi dan tidak menimpa file yang berbeda. Lindungi folder hasil restore. Untuk relay VPS gunakan `--url https://vault.domain-anda.com --env-file deployment/.env`. LAN hanya dapat diakses saat laptop menyala dan HP dapat menjangkaunya. Untuk akses dari luar rumah, pasang paket VPS di bawah. Jangan port-forward relay lokal sebagai pengganti konfigurasi publik tersebut.
 
 ## Relay HTTPS pada VPS pribadi
 
@@ -69,10 +87,10 @@ npm ci
 npm test
 CHROMIUM_PATH=/usr/bin/chromium npm run test:browser
 # Mulai emulator disposable, tunggu boot selesai, lalu:
-npm run test:android
+NUSA_DISPOSABLE_EMULATOR=1 npm run test:android
 # Setelah packaging, pada emulator disposable:
-npm run test:release
-npm run test:compatibility
+NUSA_DISPOSABLE_EMULATOR=1 npm run test:release
+NUSA_DISPOSABLE_EMULATOR=1 npm run test:compatibility
 ```
 
 Tes Android membutuhkan emulator disposable dan `openssl`. Skrip menghapus data aplikasi **pada emulator tersebut**, memasang APK app/test, membuat sertifikat TLS sementara yang dipercaya hanya untuk localhost pada debug build, lalu menjalankan instrumentasi native dan pemeriksaan hasil Android pada browser laptop. Tidak ada verifikasi TLS yang dinonaktifkan. Resource trust khusus tes dihapus setelah pengujian. APK rilis tidak menyertakannya. Jangan gunakan skrip ini untuk data pribadi di perangkat fisik.
@@ -81,9 +99,10 @@ Tes Android membutuhkan emulator disposable dan `openssl`. Skrip menghapus data 
 
 ## Batas yang masih berlaku
 
-- Maksimum file asli 20 MiB, semua jenis file diperbolehkan. Envelope terenkripsi dibatasi 40 MiB. File diproses di memori; belum ada chunking, resume, atau dukungan file video besar di atas batas ini.
-- Android Scoped Storage membatasi folder yang dapat dipilih. Data privat aplikasi lain, folder sistem, dan akses yang dilarang Android tidak dapat diambil. Ini bukan akses penuh ke seluruh filesystem.
-- Satu folder dapat didaftarkan untuk pemindaian ulang otomatis; beberapa file dapat diimpor manual. File yang berubah menghasilkan versi baru. Tidak ada penghapusan versi relay melalui UI atau retensi otomatis; pantau kapasitas VPS.
-- Browser hanya melakukan backup manual. Auto backup Android mengikuti penjadwalan sistem, bukan jaminan tepat waktu atau zero data loss.
-- Single-user, satu token relay bersama. Pemegang token dapat mengambil ciphertext dan menggunakan API penghapusan; ganti token jika bocor. Belum ada rate limiting per pengguna atau kuota total penyimpanan dalam aplikasi.
-- Tidak ada audit keamanan independen. Uji pemulihan dengan data non-sensitif dan simpan lebih dari satu backup sebelum mengandalkan aplikasi ini.
+- File baru memakai chunk AES-256-GCM 4 MiB dengan UUID/index terikat sebagai AAD; metadata/kunci file dibungkus PBKDF2-SHA256 600.000 + AES-GCM. Batas lama 20 MiB dihapus; batas praktis mengikuti disk, kuota relay, kapasitas browser dan ukuran manifest maksimum 40 MiB. Backup format v1 tetap dapat dibaca.
+- Android membatasi data privat aplikasi lain, folder sistem dan sebagian `Android/data`/`Android/obb`. Izin penyimpanan bersama bersifat opsional; sumber SAF tetap dapat dipakai tanpa izin itu.
+- Browser melakukan backup manual. Unduhan browser di atas 64 MiB membutuhkan Chrome/Edge dengan File System Access; helper restore laptop dapat digunakan untuk streaming tanpa ketergantungan fitur browser itu.
+- Backup otomatis Android mengikuti penjadwalan sistem dan kebijakan baterai. Ini bukan jaminan tepat waktu, >95% di semua jaringan, atau zero data loss. Periksa riwayat dan lakukan uji restore.
+- Single-user, satu token relay bersama. Pemegang token dapat mengambil ciphertext dan menggunakan API penghapusan metadata. Ada pembatasan autentikasi gagal dan kuota total; tidak ada retensi/garbage collection otomatis. Chunk unggahan terputus dipertahankan untuk resume dan tetap memakai kuota.
+- Riwayat terenkripsi menyimpan 500 aktivitas terbaru, termasuk nama file dan hasil parsial. File sumber tidak dihapus; perubahan isi menghasilkan versi baru. Hapus lokal tidak menghapus backup relay.
+- Pengujian emulator tidak menggantikan pengujian HP fisik, jaringan seluler, atau deployment VPS publik. Tidak ada audit keamanan independen. Cakupan dan bukti aktual ada di VALIDATION.md.

@@ -1,6 +1,6 @@
 {
   "name": "personal-vault",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,7 +14,9 @@
     "package:android": "bash scripts/package-android.sh",
     "package:distribution": "node scripts/package-distribution.mjs",
     "test:release": "node scripts/release-smoke.mjs",
-    "test:compatibility": "node scripts/compatibility-smoke.mjs"
+    "test:compatibility": "node scripts/compatibility-smoke.mjs",
+    "relay:local": "node scripts/relay-local.mjs",
+    "restore": "node scripts/restore.mjs"
   },
   "engines": {
     "node": ">=22"
