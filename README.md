@@ -2,7 +2,13 @@
 
 Aplikasi Android native dan companion browser untuk vault pribadi serta backup satu arah ke relay milik sendiri. Halaman awal berupa company profile Nusa Studio. Ketuk logo **nusa 7 kali dalam 3 detik**, lalu buat/buka vault dengan kata sandi minimal 12 karakter. Tidak ada kata sandi bawaan.
 
-Unduhan lengkap: `artifacts/nusa-vault-installation-1.1.0.zip`. Mulai dari INSTALL.md; hasil pengujian dan batas verifikasinya ada di VALIDATION.md.
+## Unduh versi 1.1.0
+
+- **[Unduh APK Android](https://github.com/zorororonoa1946-del/aplikasi/raw/refs/heads/main/artifacts/nusa-vault-1.1.0.apk)** — untuk dipasang di HP Android 8.0 atau lebih baru.
+- **[Unduh paket instalasi lengkap (ZIP)](https://github.com/zorororonoa1946-del/aplikasi/raw/refs/heads/main/artifacts/nusa-vault-installation-1.1.0.zip)** — berisi APK, source, relay, panduan instalasi, dan laporan pengujian.
+- Checksum SHA-256: [APK](artifacts/nusa-vault-1.1.0.apk.sha256) · [Paket ZIP](artifacts/nusa-vault-installation-1.1.0.zip.sha256).
+
+Mulai dari [panduan instalasi](INSTALL.md). Hasil pengujian dan batas verifikasinya ada di [VALIDATION.md](VALIDATION.md).
 
 ## Paket Android
 
