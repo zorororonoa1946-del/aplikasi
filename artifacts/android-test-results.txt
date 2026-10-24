@@ -1,4 +1,5 @@
-Android API 26, x86_64 disposable emulator, release audit 1.1.0
+2026-10-24T07:37:34.908Z
+Android API 26
 INSTRUMENTATION_STATUS: stream=PASS AES-GCM round trip & randomized encryption
 
 INSTRUMENTATION_STATUS_CODE: 0
@@ -87,6 +88,10 @@ PASS certificate picker result requires explicit owner approval before trust cha
 PASS locking dismisses pending certificate trust without accepting it
 
 Tests passed: 21
+
+INSTRUMENTATION_CODE: -1
+
+INSTRUMENTATION_RESULT: stream=PASS revoked shared storage permission blocks scanning
 
 INSTRUMENTATION_CODE: -1
 

@@ -10,7 +10,7 @@
 
 Tes Android menghapus data package `id.nusastudio.vault` hanya pada emulator. Gunakan perangkat emulator khusus pengujian dan set NUSA_DISPOSABLE_EMULATOR=1; runner menolak tanpa flag ini atau pada perangkat fisik. Hasil akhir native dan interoperabilitas ditulis ke `artifacts/android-test-results.txt` setelah seluruh pemeriksaan berhasil; file yang tidak ada tidak membuktikan tes lulus.
 
-Tambahan regresi rilis 1.1.0: `npm test` memeriksa kuota, chunk immutable, hash/AAD, HTTPS LAN dan restore CLI 25 MiB. Tes browser memeriksa file 25 MiB, SHA-256, backup v1, navigasi folder dan perbaikan chunk rusak. Tes native mencakup transfer besar/resume, beberapa sumber, pemulihan korupsi, pilihan CA dan persetujuan dialog. `npm run test:compatibility` memeriksa APK produksi serta upgrade bertanda tangan 1.0.0 ke 1.1.0 tanpa menghapus data. Pengujian upgrade memerlukan APK baseline di artifacts (atau NUSA_PREVIOUS_APK).
+Tambahan regresi rilis 1.1.0: `npm test` memeriksa kuota, chunk immutable, hash/AAD, HTTPS LAN dan restore CLI 25 MiB. Tes browser memeriksa file 25 MiB, SHA-256, backup v1, navigasi folder dan perbaikan chunk rusak. Tes native mencakup transfer besar/resume, beberapa sumber, pemulihan korupsi, pilihan CA, persetujuan dialog dan pencabutan izin penyimpanan. Pencabutan dilakukan dari host sesudah instrumentasi utama keluar, lalu diverifikasi dalam proses baru, karena Android menghentikan aplikasi saat izin dicabut. `npm run test:compatibility` memeriksa APK produksi serta upgrade bertanda tangan 1.0.0 ke 1.1.0 tanpa menghapus data. Pengujian upgrade memerlukan APK baseline di artifacts (atau NUSA_PREVIOUS_APK).
 
 ## Perangkat fisik — checklist penerimaan
 
