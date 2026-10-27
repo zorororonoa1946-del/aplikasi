@@ -1,9 +1,17 @@
 {
-  "created": "2026-10-27T06:15:41.659Z",
+  "created": "2026-10-27T06:30:59.910Z",
   "files": [
     {
-      "path": "android/app/src/main/java/id/nusastudio/vault/ServiceHome.java",
-      "sha256": "608c4e89714b8ed63ed05f6264ccae9bf36371dbf8d21a5e6b0a97620af9634d"
+      "path": "BACKEND_AUDIT.md",
+      "sha256": "51a0d82aa0b70e73a1e34d97c6a5050c6fa679e0fbdfa1befe844c154c2a7304"
+    },
+    {
+      "path": "scripts/local-container-smoke.mjs",
+      "sha256": "ce29cedca33c27a6e393abee7f8dcc8b06dc4cf847d4499c19e86df05fbb0703"
+    },
+    {
+      "path": "test/recovery.test.js",
+      "sha256": "17cac344b01c126531d560052705ae84192b0feb54d514c31fa7879ee79d91d5"
     },
     {
       "path": ".dockerignore",
@@ -11,7 +19,7 @@
     },
     {
       "path": ".github/workflows/checks.yml",
-      "sha256": "4cc3f724e0928bfac31a3e9d78b1fef30120bcfbe89d22ee213bc633fe704f10"
+      "sha256": "cb834eaaca21195d2038eeb86f5715bc66ce597f50646d541b6c1f0a7b5544bb"
     },
     {
       "path": ".gitignore",
@@ -31,7 +39,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "1e7617caf8e201a61ec66ed3a013cf1fa92aaed8c7b94602221331bd663a3782"
+      "sha256": "2eab9c8e0852e472bfdaba60a8b809f0ca54d9332acfcf8b64fb54d21a93f99a"
     },
     {
       "path": "TESTING.md",
@@ -39,7 +47,7 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "b72c8a8e2234385bc58904946160f87eaf1488f0ea122b57919b6b73ec65e1f3"
+      "sha256": "2fb0b0ad09418ba20d290895be18103c6840642ab72c4f74b1dffdc3a83e2377"
     },
     {
       "path": "android/THIRD_PARTY_NOTICES.txt",
@@ -110,6 +118,10 @@
       "sha256": "5587141bdaff72e8764871a262ca7cf7ec8809d6e9706c0e5f319947b7e76a20"
     },
     {
+      "path": "android/app/src/main/java/id/nusastudio/vault/ServiceHome.java",
+      "sha256": "608c4e89714b8ed63ed05f6264ccae9bf36371dbf8d21a5e6b0a97620af9634d"
+    },
+    {
       "path": "android/app/src/main/java/id/nusastudio/vault/SharedStorage.java",
       "sha256": "0c1fe803ceddf6af886ae7a282fb2b6ee7c415f02c547ad5b38f6f9f7a5b5880"
     },
@@ -167,7 +179,7 @@
     },
     {
       "path": "compose.yaml",
-      "sha256": "98e4ef5c905bd51bddbcdcd8e4c02f06fbd2c4e2b0adbe89c7c51c1f88de8704"
+      "sha256": "e695dcdaf9a473e9dce98ad5d1e7db9150ac15e1fe8927b6ee63e63830615e90"
     },
     {
       "path": "deployment/Caddyfile",
@@ -175,7 +187,7 @@
     },
     {
       "path": "deployment/Dockerfile.local",
-      "sha256": "51f39cc076e6c06562d6d8482c3bf6aa308a4b21d753d740b7038193a65cec3f"
+      "sha256": "f8c98dcad0bae2451990a6524a4c6b5332eb131f59fefcf92ff8ccf44aa91ec4"
     },
     {
       "path": "deployment/compose.yaml",
@@ -187,7 +199,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "7e02508b3601b45115358818d8748d415655c2da7dab437e5f83686ae1fa63c5"
+      "sha256": "773dc04ae168fc037c499e6e1cab1e95e95b8f2adb31e17ae2d3e2da60eb3291"
     },
     {
       "path": "public/app.js",
@@ -247,7 +259,7 @@
     },
     {
       "path": "scripts/package-distribution.mjs",
-      "sha256": "380e9ebfda30d4b7693971e54c3aaae457943ccbfce8e60be704089421aa368d"
+      "sha256": "59786d0a7a65fa7c58baa0bf4b7072b5eddea709a8390c75882a9b83d2882cad"
     },
     {
       "path": "scripts/relay-local.mjs",
@@ -263,7 +275,7 @@
     },
     {
       "path": "server.js",
-      "sha256": "b9f3e284ff460087797e40fdf835ee1b297ea6be1558cdfcf1eebe717ade7f36"
+      "sha256": "b3b891ef6280cd8f7f290f9609d10cfc33707c8c7ee04fb84a4cb6f43a4f2997"
     },
     {
       "path": "test/chunks.test.js",
@@ -311,11 +323,19 @@
     },
     {
       "path": "artifacts/android-test-results.txt",
-      "sha256": "2efe0eacd17ee7a9e4e8bd64a1f313397f262e0410c3960f0c9224dcd72f742d"
+      "sha256": "60d81f9bd976726b7b348aea99505183cea3509cc68fab33c90be740ea7ac343"
     },
     {
       "path": "artifacts/container-test-results.txt",
-      "sha256": "7c492632bbf64872bf141eb12313e05630d67bcda20a2c116bbb7d430378a4a5"
+      "sha256": "4291a10ce89199bd95e854548b87cc30deda595fd202710ace7a03cbb5251e44"
+    },
+    {
+      "path": "artifacts/local-container-test-results.txt",
+      "sha256": "9c054dd2d973fd1120bd03bd3b8a90b59cbba4c03971b90cb2889676a4c26b34"
+    },
+    {
+      "path": "artifacts/backend-test-results.txt",
+      "sha256": "f4ce2d7a84c00c721b9109f4125ac96bbc46dc480414f260f8043a41703035a2"
     },
     {
       "path": "artifacts/release-smoke-results.txt",
@@ -327,7 +347,7 @@
     },
     {
       "path": "artifacts/web-test-results.txt",
-      "sha256": "ddb0055f4c35925413073a3df2b035fedb5ee879c77800f33341815b5b5ff9b2"
+      "sha256": "d070905aa04da204e69d9618056abd416a532eb5ac4fae1453ba220782d6e088"
     }
   ]
 }

@@ -10,6 +10,8 @@ Aplikasi Android native dan companion browser untuk vault pribadi serta backup s
 
 Mulai dari [panduan instalasi](INSTALL.md). Hasil pengujian dan batas verifikasinya ada di [VALIDATION.md](VALIDATION.md).
 
+Audit ulang backend dan batas penggunaan nyata: [BACKEND_AUDIT.md](BACKEND_AUDIT.md).
+
 ## Tampilan Android 1.2.0
 
 UI native diadaptasi dari [Shoutoo/siservis-pc](https://github.com/Shoutoo/siservis-pc/tree/232366f88cd66a8aacccf318ce5028b2641a63b0). Header gradasi biru, empat kartu statistik, tiket contoh dan rumus estimasi mengikuti sumber. Pada HP, statistik menjadi dua kolom dan detail status tersusun vertikal; ukuran font aksesibilitas besar memakai satu kolom. Semua kontrol halaman awal bekerja tanpa koneksi internet. Data tiket/statistik merupakan demo, bukan status servis langsung dari server.
@@ -36,7 +38,8 @@ LAN_IP=192.168.1.10
 Ganti IP contoh dengan IP komputer Anda, kemudian:
 
 ```sh
-docker compose up -d --build
+docker compose up -d --build --wait
+docker compose ps
 docker compose logs vault
 docker compose exec vault cat /data/connection.txt
 docker compose cp vault:/data/ca.pem ./nusa-local-ca.pem

@@ -8,6 +8,7 @@ import {
   readdir,
   unlink,
   stat,
+  rm,
 } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import { timingSafeEqual, createHash, randomUUID } from "node:crypto";
@@ -21,12 +22,22 @@ const digest = (value) => createHash("sha256").update(value).digest();
 const canonical = (value) =>
   typeof value === "string" &&
   Buffer.from(value, "base64").toString("base64") === value;
-async function storageSize(directory) {
+async function storageSize(directory, recover = false) {
   let total = 0;
   for (const entry of await readdir(directory, { withFileTypes: true })) {
-    if (entry.name.startsWith(".upload-")) continue;
+    if (entry.name.startsWith(".upload-")) {
+      // No requests write until ready() completes. Remove only our stale regular
+      // temporary files; committed hard links retain their contents.
+      if (
+        recover &&
+        entry.isFile() &&
+        new RegExp(`^\\.upload-${uuid}$`).test(entry.name)
+      )
+        await unlink(join(directory, entry.name));
+      continue;
+    }
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) total += await storageSize(path);
+    if (entry.isDirectory()) total += await storageSize(path, recover);
     else if (entry.isFile()) total += (await stat(path)).size;
   }
   return total;
@@ -49,7 +60,7 @@ export function createServer({
   const ready = () =>
     (initialize ??= (async () => {
       await mkdir(directory, { recursive: true, mode: 0o700 });
-      used = await storageSize(directory);
+      used = await storageSize(directory, true);
     })());
   const mutate = (task) => {
     const next = queue.then(task);
@@ -156,6 +167,19 @@ export function createServer({
           const size = (await stat(destination)).size;
           await unlink(destination);
           used -= size;
+          // A v2 record owns encrypted chunks under the same UUID. Deleting only
+          // its manifest leaves downloadable ciphertext consuming the quota.
+          const chunks = join(directory, "chunks", fileMatch[1]);
+          try {
+            const chunkBytes = await storageSize(chunks);
+            await rm(chunks, { recursive: true, force: true });
+            used -= chunkBytes;
+          } catch (error) {
+            if (error.code !== "ENOENT") {
+              used = await storageSize(directory);
+              throw error;
+            }
+          }
         });
         return reply(200, { ok: true });
       }

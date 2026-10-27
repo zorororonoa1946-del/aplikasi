@@ -10,6 +10,22 @@ services:
       - vault-local:/data
     environment:
       MAX_STORAGE_BYTES: ${MAX_STORAGE_BYTES:-10737418240}
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - >-
+          const fs=require('node:fs'),https=require('node:https');
+          const config=JSON.parse(fs.readFileSync('/data/config.json'));
+          const req=https.get('https://127.0.0.1:3443/api/files',
+          {ca:fs.readFileSync('/data/ca.pem'),headers:{Authorization:'Bearer '+config.token}},
+          res=>{res.resume();res.on('end',()=>process.exit(res.statusCode===200?0:1));});
+          req.setTimeout(4000,()=>req.destroy());req.on('error',()=>process.exit(1));
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
     restart: unless-stopped
     read_only: true
     tmpfs:

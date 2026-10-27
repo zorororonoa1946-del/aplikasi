@@ -16,7 +16,8 @@
     "test:release": "node scripts/release-smoke.mjs",
     "test:compatibility": "node scripts/compatibility-smoke.mjs",
     "relay:local": "node scripts/relay-local.mjs",
-    "restore": "node scripts/restore.mjs"
+    "restore": "node scripts/restore.mjs",
+    "test:container:local": "node scripts/local-container-smoke.mjs"
   },
   "engines": {
     "node": ">=22"

@@ -1,5 +1,7 @@
 # Validasi pembaruan UI Android 1.2.0
 
+Audit backend terbaru pada 27 Oktober 2026, perbaikan penyimpanan, pengujian Docker lokal melalui port host dan SIGKILL, serta batas backend SiServis-PC dijelaskan di [BACKEND_AUDIT.md](BACKEND_AUDIT.md).
+
 Pembaruan 27 Oktober 2026 mengadaptasi UI SiServis-PC menjadi halaman awal native Android. Source acuan: `Shoutoo/siservis-pc` commit `232366f88cd66a8aacccf318ce5028b2641a63b0`. Dashboard, tiket contoh, dan kalkulator bekerja offline; tidak ada koneksi ke backend servis PHP.
 
 - Build APK ARM64, ARMv7 dan x86_64 berhasil; versionName 1.2.0, versionCode 3, package ID tetap sama.

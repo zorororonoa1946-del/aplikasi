@@ -30,6 +30,8 @@ const files = [
   "artifacts/siservis-home.png",
   "artifacts/android-test-results.txt",
   "artifacts/container-test-results.txt",
+  "artifacts/local-container-test-results.txt",
+  "artifacts/backend-test-results.txt",
   "artifacts/release-smoke-results.txt",
   "artifacts/compatibility-test-results.txt",
   "artifacts/web-test-results.txt",

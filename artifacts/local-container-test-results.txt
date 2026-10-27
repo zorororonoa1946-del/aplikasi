@@ -1,0 +1,4 @@
+2026-10-27T06:27:22.203Z
+PASS root Compose starts healthy, nonroot/read-only; host published port verifies CA and rejects untrusted TLS/wrong token
+PASS 25 MiB+17 byte encrypted chunk upload and independent client restore match SHA-256; overwrite rejected
+PASS SIGKILL and restart preserve CA, token, complete backup and exact restored bytes

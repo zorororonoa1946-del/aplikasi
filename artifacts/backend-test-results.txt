@@ -1,0 +1,25 @@
+2026-10-27T06:28:21.161708+00:00
+
+> personal-vault@1.2.0 test
+> node --test test/*.test.js
+
+✔ chunk writes are immutable, hash-verifiable, bounded, and not listed as files until manifest publication (375.519594ms)
+✔ quota rejects new data without deleting prior chunks or leaving temporary files (25.759039ms)
+✔ failed authentication is rate limited while valid owner credentials remain usable (61.536803ms)
+✔ v2 chunks bind to file and position; malformed manifests and altered bytes are rejected (232.523467ms)
+✔ relay installer creates private credentials once, refuses invalid domains and preserves existing secrets (293.969791ms)
+✔ local relay setup preserves identity/token, keeps credentials private, and uses verified TLS with hostname checks (663.277488ms)
+✔ restart removes interrupted temporary writes while preserving committed hard links and quota (72.173701ms)
+✔ deleting a record also removes its v2 chunks and releases quota (42.82393ms)
+✔ simultaneous uploads cannot overcommit storage quota (17.510174ms)
+✔ laptop restore streams a >20 MiB file over verified TLS, preserves existing files, rejects traversal, and never publishes tampered output (2739.463011ms)
+✔ relay authenticates, stores ciphertext, restores it, and protects existing backups (117.785483ms)
+✔ unconfigured relay refuses data access (3.624856ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3482.807162
