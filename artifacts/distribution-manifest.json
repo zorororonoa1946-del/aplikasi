@@ -1,13 +1,9 @@
 {
-  "created": "2026-10-24T08:04:21.129Z",
+  "created": "2026-10-27T06:15:41.659Z",
   "files": [
     {
-      "path": "compose.yaml",
-      "sha256": "98e4ef5c905bd51bddbcdcd8e4c02f06fbd2c4e2b0adbe89c7c51c1f88de8704"
-    },
-    {
-      "path": "deployment/Dockerfile.local",
-      "sha256": "51f39cc076e6c06562d6d8482c3bf6aa308a4b21d753d740b7038193a65cec3f"
+      "path": "android/app/src/main/java/id/nusastudio/vault/ServiceHome.java",
+      "sha256": "608c4e89714b8ed63ed05f6264ccae9bf36371dbf8d21a5e6b0a97620af9634d"
     },
     {
       "path": ".dockerignore",
@@ -19,7 +15,7 @@
     },
     {
       "path": ".gitignore",
-      "sha256": "3049a6e0b148ee48f78548146f1f19822f5faf4a3d5d549d3a839b89030f94b4"
+      "sha256": "fae9438332b031d168ce242fd2fa70216282b70e0e00e45431d2fa504ac3d6c2"
     },
     {
       "path": "AUDIT.md",
@@ -31,11 +27,11 @@
     },
     {
       "path": "INSTALL.md",
-      "sha256": "ca59f8389d406100d6558f0d711a95f0b13f45693c121945177578114d915999"
+      "sha256": "f08c3c54d78da2abd18554b937033cfed031d71af93c50d6e6ed6b0abc7c51c4"
     },
     {
       "path": "README.md",
-      "sha256": "9e73283c70374188c40d6a4af06f1c7432a0736a2f446973ae05b5544a3cc826"
+      "sha256": "1e7617caf8e201a61ec66ed3a013cf1fa92aaed8c7b94602221331bd663a3782"
     },
     {
       "path": "TESTING.md",
@@ -43,7 +39,7 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "1f91e7a241ae6d7c8388acb9fed03a95b1a31b2af38ebc4f5ac02efb7afbf7ab"
+      "sha256": "b72c8a8e2234385bc58904946160f87eaf1488f0ea122b57919b6b73ec65e1f3"
     },
     {
       "path": "android/THIRD_PARTY_NOTICES.txt",
@@ -51,7 +47,7 @@
     },
     {
       "path": "android/app/build.gradle",
-      "sha256": "c1b38f1e901664e9f51e10c2c7629a23fe9a0a10ea36169a2d339a1bbad01314"
+      "sha256": "8e5f348e34c7d18d26e8cd5fa88c218479e1fc38ecf46ee83031951d855ada0a"
     },
     {
       "path": "android/app/src/androidTest/AndroidManifest.xml",
@@ -75,11 +71,11 @@
     },
     {
       "path": "android/app/src/androidTest/java/id/nusastudio/vault/VaultInstrumentation.java",
-      "sha256": "d8b2baa07dfdfc8451967626eaf8e11f0666ccb05e52ad87feee2887a0b43aa9"
+      "sha256": "0e7cc15df719e205cd281d6159f3da92ee692f6a277a2aeb35c39381429d571d"
     },
     {
       "path": "android/app/src/main/AndroidManifest.xml",
-      "sha256": "872e1e81e91ece77dc3d216152378821bfc47e6f05b92d2b4fb476327bd3b5f9"
+      "sha256": "68caf676a05b54df06eefca4226bad38eef014af508ab04d9088e582e4b214ac"
     },
     {
       "path": "android/app/src/main/cpp/CMakeLists.txt",
@@ -99,7 +95,7 @@
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/MainActivity.java",
-      "sha256": "87ebccd1f71f600e601006e3037180ddcf30012140457a567e7213911894a39b"
+      "sha256": "1bcbc0d120fe1f9e917b231dcd49d1e33d315535d12cdb8bbd24ea014bcd4a94"
     },
     {
       "path": "android/app/src/main/java/id/nusastudio/vault/NativeKdf.java",
@@ -127,11 +123,11 @@
     },
     {
       "path": "android/app/src/main/res/drawable/ic_nusa.xml",
-      "sha256": "6abae36d5d41f2c5d5e0bef64eafada8187e112486db63a3a5ac1b889b1d27c3"
+      "sha256": "06e03208495b32942a2766bf40989e3055900b62a411ce5a101ae58249359577"
     },
     {
       "path": "android/app/src/main/res/values/strings.xml",
-      "sha256": "bb1ac53219d133a6734df3cd01c67e9e032036a0e66a47625c97aeebba853d62"
+      "sha256": "a894ee4fc44924d54cf3bb1239a4f1307b96aec8a9504bff7de3e00b36ef0cec"
     },
     {
       "path": "android/app/src/main/res/values/styles.xml",
@@ -170,8 +166,16 @@
       "sha256": "130f53775bd2b763bd01bac9ffa7dcb2c503a2faf676682d374dc08bdbd9a114"
     },
     {
+      "path": "compose.yaml",
+      "sha256": "98e4ef5c905bd51bddbcdcd8e4c02f06fbd2c4e2b0adbe89c7c51c1f88de8704"
+    },
+    {
       "path": "deployment/Caddyfile",
       "sha256": "ca53486a6e406edad29fb3c6107238772e3f31555c3efcf5f008769f396fb230"
+    },
+    {
+      "path": "deployment/Dockerfile.local",
+      "sha256": "51f39cc076e6c06562d6d8482c3bf6aa308a4b21d753d740b7038193a65cec3f"
     },
     {
       "path": "deployment/compose.yaml",
@@ -179,11 +183,11 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "40f7448414b849e66a80ea4b3586d41c0777404ef9c4f5b0a1f0b66fe4cc2f81"
+      "sha256": "7d60b626e7083db835c4fa544dbc1227fbd2754b6ea1cb9341e6eae57ec26b5b"
     },
     {
       "path": "package.json",
-      "sha256": "6f2c4cdf0e4ec0e86e8723877edd2442b006bc4264c467545d658aedcd4b549b"
+      "sha256": "7e02508b3601b45115358818d8748d415655c2da7dab437e5f83686ae1fa63c5"
     },
     {
       "path": "public/app.js",
@@ -211,7 +215,7 @@
     },
     {
       "path": "scripts/android-e2e.mjs",
-      "sha256": "4507dd035027f0f0b5f6840ba909b34850af881772be239b4b9cd48601a6dd20"
+      "sha256": "1e9c644e274d419349c1730b6e7aef1f61acac01d7191c0f7ee7334f52d24520"
     },
     {
       "path": "scripts/browser-e2e.mjs",
@@ -223,7 +227,7 @@
     },
     {
       "path": "scripts/compatibility-smoke.mjs",
-      "sha256": "18a89394c75d18f232c663269f3e3f1fd06810b645ebaaa155251401ec7234d7"
+      "sha256": "5975a84628d143499ece0325f54b6b1cc87ea1c6e4e510f14f7892f6812bc5df"
     },
     {
       "path": "scripts/container-smoke.mjs",
@@ -243,7 +247,7 @@
     },
     {
       "path": "scripts/package-distribution.mjs",
-      "sha256": "a63c7458969e6ba4530e3bf0878e2b6d4d3870c910fd75eb8a247ef467abee6d"
+      "sha256": "380e9ebfda30d4b7693971e54c3aaae457943ccbfce8e60be704089421aa368d"
     },
     {
       "path": "scripts/relay-local.mjs",
@@ -251,7 +255,7 @@
     },
     {
       "path": "scripts/release-smoke.mjs",
-      "sha256": "28af3b3ff8d585c86b6ca9c199818f177e6a5838a30a28a134235c2f83c3aa58"
+      "sha256": "e220c895352d5fedf8bd500372be92ecda29c366e94739d29cbb15667a1256dd"
     },
     {
       "path": "scripts/restore.mjs",
@@ -282,8 +286,8 @@
       "sha256": "bdb1442fb1305c7ad8e40b544c6f1212548480e6c7357b570d0e02c4ad7984b3"
     },
     {
-      "path": "artifacts/nusa-vault-1.1.0.apk",
-      "sha256": "d762c85a21a13d3a2f5d64a3d71ce0c5ac1417e3027af2c62b67e275376b186d"
+      "path": "artifacts/nusa-vault-1.2.0.apk",
+      "sha256": "03147ec70f404a92e56c6269d227aadfeb2eb85d912dc7837a4f0b00866896a3"
     },
     {
       "path": "artifacts/nusa-vault-1.0.0.apk",
@@ -294,16 +298,20 @@
       "sha256": "4dd740d793bb6b57e417a507a9c8f65bebda837d6efebdac4675bb4cbad2b3b1"
     },
     {
-      "path": "artifacts/nusa-vault-1.1.0.apk.sha256",
-      "sha256": "1954ae8e9db5f2179adaf1b3ae378dbabd4451a869aa4c87a37821caa111e44d"
+      "path": "artifacts/nusa-vault-1.2.0.apk.sha256",
+      "sha256": "9540a2250900862419a4dfc6d2503d884e2315e0ef5e5a22088389d6e22140c5"
     },
     {
       "path": "artifacts/apk-signature.txt",
       "sha256": "3ae2afc077c2c7fac93702fd1d8aeb7976029e5643ffa0d64107b293ef6ce631"
     },
     {
+      "path": "artifacts/siservis-home.png",
+      "sha256": "8f2b25ac0f17e4e5e6b4444ebf42e46fd981beb0e0c586da2573508d8b74c891"
+    },
+    {
       "path": "artifacts/android-test-results.txt",
-      "sha256": "04344bdc8e803c725c298c857c2fafe7f76fe1fcc507c3adf3f19e62bdd89726"
+      "sha256": "2efe0eacd17ee7a9e4e8bd64a1f313397f262e0410c3960f0c9224dcd72f742d"
     },
     {
       "path": "artifacts/container-test-results.txt",
@@ -311,11 +319,11 @@
     },
     {
       "path": "artifacts/release-smoke-results.txt",
-      "sha256": "e6d82b7e65ed2cea562fa9102afe54765464df35c2b8e22f23b044f3ab5d9318"
+      "sha256": "a751a4028a3945796f0250a7b8b3d0b100bf1d721cc780485f7e2cd6ed697192"
     },
     {
       "path": "artifacts/compatibility-test-results.txt",
-      "sha256": "21423417164ce64582f7b4a46bfcce8655304e5a74d6fc43237e2a4959fad781"
+      "sha256": "e2f83bd47fa9aab6d3bba6a0acbd3180147b987c1567db6d129d74bd7d51ea06"
     },
     {
       "path": "artifacts/web-test-results.txt",

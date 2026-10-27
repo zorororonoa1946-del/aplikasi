@@ -2,14 +2,14 @@
 
 ## 1. Pasang di HP Android
 
-1. Ambil `nusa-vault-1.1.0.apk` dari direktori `artifacts` di dalam paket.
-2. Periksa checksum dengan file `.apk.sha256`. Windows: `Get-FileHash .\artifacts\nusa-vault-1.1.0.apk -Algorithm SHA256`; Linux: `sha256sum -c artifacts/nusa-vault-1.1.0.apk.sha256`.
+1. Ambil `nusa-vault-1.2.0.apk` dari direktori `artifacts` di dalam paket.
+2. Periksa checksum dengan file `.apk.sha256`. Windows: `Get-FileHash .\artifacts\nusa-vault-1.2.0.apk -Algorithm SHA256`; Linux: `sha256sum -c artifacts/nusa-vault-1.2.0.apk.sha256`.
 3. Salin APK ke HP Android 8.0 atau lebih baru. Buka file dan izinkan instalasi dari aplikasi file manager yang Anda pakai.
-4. Aplikasi tampil sebagai **Nusa Studio**. Ketuk logo **nusa 7 kali** dengan jeda antarketukan tidak lebih dari 3 detik.
+4. Aplikasi tampil sebagai **SiServis-PC**. Ketuk logo **SiServis-PC 7 kali** dengan jeda antarketukan tidak lebih dari 3 detik.
 5. Buat kata sandi minimal 12 karakter. Tidak ada PIN/kata sandi bawaan atau pemulihan kata sandi.
 6. Pilih file untuk menguji vault lokal. Keluar ke aplikasi lain lalu kembali: vault harus terkunci. Buka kembali, pilih **Simpan salinan**, dan periksa isi file.
 
-Rilis 1.1.0 memakai kunci yang sama dengan 1.0.0; instal di atas versi lama untuk mempertahankan data. Backup dahulu. APK rilis memiliki tanda tangan sendiri. Jika sebelumnya terpasang build debug, Android akan menolak penggantian karena tanda tangan berbeda. Backup dan pastikan bisa dipulihkan sebelum uninstall build lama.
+Rilis 1.2.0 memakai kunci yang sama dengan 1.0.0 dan 1.1.0; instal di atas versi lama untuk mempertahankan data. Backup dahulu. APK rilis memiliki tanda tangan sendiri. Jika sebelumnya terpasang build debug, Android akan menolak penggantian karena tanda tangan berbeda. Backup dan pastikan bisa dipulihkan sebelum uninstall build lama.
 
 Untuk server Docker lokal, ikuti [langkah clone dan Docker Compose di README](README.md#server-lokal-dengan-docker-tanpa-nodeopenssl-di-komputer).
 
@@ -58,3 +58,9 @@ File besar diproses dalam chunk 4 MiB, tanpa batas lama 20 MiB. Beberapa file/fo
 ## Kunci untuk pembaruan APK
 
 ZIP tidak menyertakan kunci penandatanganan privat. Jika ingin membangun pembaruan yang dapat menggantikan APK ini, backup `.local/signing` dari workspace pembangun melalui penyimpanan privat. Source dapat dibangun tanpa kunci tersebut, tetapi tanda tangan baru memerlukan uninstall instalasi lama dan pemulihan dari backup.
+
+## Mencoba tampilan SiServis-PC
+
+Halaman awal Android 1.2.0 dapat dipakai tanpa server/internet. Pilih contoh tiket `SRV-202610-001`, `002`, atau `003` untuk melihat status dan rincian demo. Nomor di luar contoh menampilkan pesan tidak ditemukan. Kalkulator mengikuti tarif dari repositori SiServis-PC: Laptop + Sedang + Thermal Paste + diskon civitas menghasilkan Rp 202.500, dengan estimasi 3 hari kerja. Data ini belum terhubung ke backend servis.
+
+Untuk masuk ke vault, ketuk tulisan **SiServis-PC** di header tujuh kali. Saat dikunci atau aplikasi masuk background, tampilan kembali ke dashboard servis. Di browser laptop, logo akses vault masih **nusa**.

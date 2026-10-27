@@ -1,4 +1,4 @@
-2026-10-24T07:37:34.908Z
+2026-10-27T06:12:30.951Z
 Android API 26
 INSTRUMENTATION_STATUS: stream=PASS AES-GCM round trip & randomized encryption
 
@@ -48,6 +48,12 @@ INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_STATUS: stream=PASS company profile and locked UI
 
 INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS SiServis sample tracking and unknown ticket
+
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: stream=PASS SiServis calculator matches original discounted estimate
+
+INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_STATUS: stream=PASS seven taps opens password dialog
 
 INSTRUMENTATION_STATUS_CODE: 0
@@ -63,7 +69,7 @@ INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_STATUS: stream=PASS locking dismisses pending certificate trust without accepting it
 
 INSTRUMENTATION_STATUS_CODE: 0
-INSTRUMENTATION_RESULT: passed=21
+INSTRUMENTATION_RESULT: passed=23
 INSTRUMENTATION_RESULT: stream=
 PASS AES-GCM round trip & randomized encryption
 PASS wrong password and tamper rejection
@@ -81,13 +87,15 @@ PASS multiple selected sources preserve legacy configuration and continue past a
 PASS shared storage requires consent and scans owner-approved primary storage
 PASS modified chunk is rejected and restored from immutable relay backup
 PASS company profile and locked UI
+PASS SiServis sample tracking and unknown ticket
+PASS SiServis calculator matches original discounted estimate
 PASS seven taps opens password dialog
 PASS password unlocks actual native file manager
 PASS lock returns to company profile
 PASS certificate picker result requires explicit owner approval before trust changes
 PASS locking dismisses pending certificate trust without accepting it
 
-Tests passed: 21
+Tests passed: 23
 
 INSTRUMENTATION_CODE: -1
 
@@ -96,5 +104,3 @@ INSTRUMENTATION_RESULT: stream=PASS revoked shared storage permission blocks sca
 INSTRUMENTATION_CODE: -1
 
 PASS Android -> HTTPS relay -> independent laptop browser, exact restored bytes
-
-GitHub Actions PASS: web + android; tested code 114d9e892d6c858fd18e908beecbcaa5577be909; https://github.com/zorororonoa1946-del/aplikasi/actions/runs/40074751665

@@ -1,14 +1,22 @@
-# Nusa Studio — Personal Vault & Backup
+# SiServis-PC Android — Personal Vault & Backup
 
-Aplikasi Android native dan companion browser untuk vault pribadi serta backup satu arah ke relay milik sendiri. Halaman awal berupa company profile Nusa Studio. Ketuk logo **nusa 7 kali dalam 3 detik**, lalu buat/buka vault dengan kata sandi minimal 12 karakter. Tidak ada kata sandi bawaan.
+Aplikasi Android native dan companion browser untuk vault pribadi serta backup satu arah ke relay milik sendiri. Halaman awal Android mengikuti [SiServis-PC](https://github.com/Shoutoo/siservis-pc), dengan header biru, statistik, contoh pelacakan tiket, dan kalkulator servis yang bekerja offline. Data servis masih berupa contoh, belum tersambung ke backend servis. Ketuk logo **SiServis-PC 7 kali dengan jeda antarketukan maksimal 3 detik**, lalu buat/buka vault dengan kata sandi minimal 12 karakter. Tidak ada kata sandi bawaan.
 
-## Unduh versi 1.1.0
+## Unduh versi 1.2.0
 
-- **[Unduh APK Android](https://github.com/zorororonoa1946-del/aplikasi/raw/refs/heads/main/artifacts/nusa-vault-1.1.0.apk)** — untuk dipasang di HP Android 8.0 atau lebih baru.
-- **[Unduh paket instalasi lengkap (ZIP)](https://github.com/zorororonoa1946-del/aplikasi/raw/refs/heads/main/artifacts/nusa-vault-installation-1.1.0.zip)** — berisi APK, source, relay, panduan instalasi, dan laporan pengujian.
-- Checksum SHA-256: [APK](artifacts/nusa-vault-1.1.0.apk.sha256) · [Paket ZIP](artifacts/nusa-vault-installation-1.1.0.zip.sha256).
+- **[Unduh APK Android](https://github.com/zorororonoa1946-del/aplikasi/raw/refs/heads/main/artifacts/nusa-vault-1.2.0.apk)** — untuk dipasang di HP Android 8.0 atau lebih baru.
+- **[Unduh paket instalasi lengkap (ZIP)](https://github.com/zorororonoa1946-del/aplikasi/raw/refs/heads/main/artifacts/nusa-vault-installation-1.2.0.zip)** — berisi APK, source, relay, panduan instalasi, dan laporan pengujian.
+- Checksum SHA-256: [APK](artifacts/nusa-vault-1.2.0.apk.sha256) · [Paket ZIP](artifacts/nusa-vault-installation-1.2.0.zip.sha256).
 
 Mulai dari [panduan instalasi](INSTALL.md). Hasil pengujian dan batas verifikasinya ada di [VALIDATION.md](VALIDATION.md).
+
+## Tampilan Android 1.2.0
+
+UI native diadaptasi dari [Shoutoo/siservis-pc](https://github.com/Shoutoo/siservis-pc/tree/232366f88cd66a8aacccf318ce5028b2641a63b0). Header gradasi biru, empat kartu statistik, tiket contoh dan rumus estimasi mengikuti sumber. Pada HP, statistik menjadi dua kolom dan detail status tersusun vertikal; ukuran font aksesibilitas besar memakai satu kolom. Semua kontrol halaman awal bekerja tanpa koneksi internet. Data tiket/statistik merupakan demo, bukan status servis langsung dari server.
+
+![Tampilan SiServis-PC di Android](artifacts/siservis-home.png)
+
+Pasang APK 1.2.0 di atas APK rilis sebelumnya; jangan uninstall agar data lokal tetap ada. Nama launcher sekarang **SiServis-PC**, dengan ikon monitor biru. Identitas paket, kunci penandatanganan, password dan format backup tidak berubah. Companion browser laptop tetap memakai tampilan Nusa Studio.
 
 ## Server lokal dengan Docker (tanpa Node/OpenSSL di komputer)
 
@@ -47,13 +55,13 @@ Data terenkripsi, token dan identitas TLS tersimpan pada volume `vault-local`, t
 ## Paket Android
 
 - Minimum Android 8.0 / API 26; target Android 15 / API 35.
-- APK rilis: `artifacts/nusa-vault-1.1.0.apk`, tersedia setelah `scripts/package-android.sh` berhasil. Checksum dan informasi signature ada di direktori yang sama.
-- Instal APK melalui file manager Android dan izinkan instalasi dari sumber tersebut, atau gunakan `adb install -r artifacts/nusa-vault-1.1.0.apk`.
+- APK rilis: `artifacts/nusa-vault-1.2.0.apk`, tersedia setelah `scripts/package-android.sh` berhasil. Checksum dan informasi signature ada di direktori yang sama.
+- Instal APK melalui file manager Android dan izinkan instalasi dari sumber tersebut, atau gunakan `adb install -r artifacts/nusa-vault-1.2.0.apk`.
 - Build debug dan rilis memakai tanda tangan berbeda. Beralih dari debug ke rilis memerlukan uninstall; **backup dan uji pemulihan sebelum uninstall**, karena uninstall menghapus vault lokal dan pengaturan.
 
 ## Menggunakan Android
 
-1. Buka Nusa Studio, ketuk logo 7 kali, dan buat kata sandi vault. Simpan kata sandi secara aman: tidak ada reset atau recovery key.
+1. Buka SiServis-PC, ketuk logo 7 kali, dan buat kata sandi vault. Simpan kata sandi secara aman: tidak ada reset atau recovery key.
 2. Pilih file atau folder melalui pemilih dokumen Android. Beberapa file/folder dapat menjadi sumber otomatis. Opsional, pilih seluruh penyimpanan bersama dan setujui izin khusus Android; izin ini tidak membuka data privat aplikasi lain. Saat kembali dari pemilih file, masukkan kata sandi kembali bila vault telah terkunci.
 3. Di Pengaturan relay, masukkan origin HTTPS relay pribadi, misalnya `https://vault.domain-anda.com`, dan token relay terpisah dari kata sandi vault.
 4. Pilih **Backup sekarang**. Aplikasi memeriksa ulang semua sumber file/folder yang dipilih; versi dengan isi berubah disimpan sebagai backup baru. File sumber tidak dihapus atau ditimpa.

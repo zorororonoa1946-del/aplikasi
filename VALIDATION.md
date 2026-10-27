@@ -1,4 +1,17 @@
-# Hasil validasi rilis 1.1.0
+# Validasi pembaruan UI Android 1.2.0
+
+Pembaruan 27 Oktober 2026 mengadaptasi UI SiServis-PC menjadi halaman awal native Android. Source acuan: `Shoutoo/siservis-pc` commit `232366f88cd66a8aacccf318ce5028b2641a63b0`. Dashboard, tiket contoh, dan kalkulator bekerja offline; tidak ada koneksi ke backend servis PHP.
+
+- Build APK ARM64, ARMv7 dan x86_64 berhasil; versionName 1.2.0, versionCode 3, package ID tetap sama.
+- Lint release: 0 error, 1 peringatan ScopedStorage yang sudah ada.
+- Android API 26: 23 tes utama + 1 tes pencabutan izin di proses terpisah lulus. Dua tes tambahan memeriksa pencarian tiket contoh/nomor tidak dikenal dan perhitungan Laptop + Sedang + Thermal Paste + diskon 10% = Rp 202.500.
+- Tujuh ketukan membuka dialog, password membuka vault, dan lock kembali ke dashboard SiServis-PC teruji. Backup Android → HTTPS relay → browser menghasilkan byte yang sama.
+- Hasil render native pada layar emulator 320 × 640 diperiksa; tangkapan halaman terkunci ada di `artifacts/siservis-home.png`. Gambar dibuat oleh instrumentasi tes dengan menggambar View halaman contoh ke bitmap; FLAG_SECURE produksi tidak dinonaktifkan.
+- Tanda tangan v2/v3 dan sertifikat rilis sama dengan versi sebelumnya. Hasil instalasi APK produksi dan uji upgrade tercatat dalam laporan `release-smoke-results.txt` serta `compatibility-test-results.txt`.
+
+Belum diuji pada HP fisik pengguna atau semua versi/vendor Android. Server Docker dan companion web tidak diubah pada pembaruan UI ini; hasil audit 1.1.0 di bawah merupakan bukti historis, bukan pengujian ulang server pada 1.2.0. Status CI untuk commit UI baru dapat dilihat di GitHub Actions; hasil lokal tidak berarti CI remote sudah lulus.
+
+## Hasil validasi rilis 1.1.0 (historis)
 
 Pengujian dalam environment pengembangan pada 24 Oktober 2026. Baseline 1.0.0 diperiksa terhadap PRD; perubahan dan batas penerimaan dijelaskan di AUDIT.md. Ini bukan klaim pengujian semua HP atau deployment VPS publik.
 
@@ -26,7 +39,7 @@ Workflow GitHub Actions menjalankan regresi web/container dan native pada setiap
 
 ## Verifikasi GitHub Actions
 
-Run https://github.com/zorororonoa1946-del/aplikasi/actions/runs/40074751665 lulus untuk job web dan Android pada kode `114d9e892d6c858fd18e908beecbcaa5577be909`. Kegagalan setup KVM dan pencabutan izin saat instrumentasi telah diperbaiki. Commit setelah kode yang diuji hanya memperbarui dokumentasi/paket/laporan; workflow mengabaikan push yang hanya mengubah Markdown dan artifacts.
+Run https://github.com/zorororonoa1946-del/aplikasi/actions/runs/40074751665 lulus untuk job web dan Android pada kode `114d9e892d6c858fd18e908beecbcaa5577be909`. Kegagalan setup KVM dan pencabutan izin saat instrumentasi telah diperbaiki. Run tersebut merupakan bukti audit historis 1.1.0. Workflow mengabaikan push yang hanya mengubah Markdown dan artifacts.
 
 ## Docker LAN lokal
 

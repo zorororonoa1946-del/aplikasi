@@ -33,3 +33,10 @@ artifacts/distribution-manifest.json
 !artifacts/nusa-vault-1.1.0.apk.sha256
 !artifacts/nusa-vault-installation-1.1.0.zip
 !artifacts/nusa-vault-installation-1.1.0.zip.sha256
+
+# SiServis-PC mobile UI release.
+!artifacts/nusa-vault-1.2.0.apk
+!artifacts/nusa-vault-1.2.0.apk.sha256
+!artifacts/nusa-vault-installation-1.2.0.zip
+!artifacts/nusa-vault-installation-1.2.0.zip.sha256
+!artifacts/siservis-home.png

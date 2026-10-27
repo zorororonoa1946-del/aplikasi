@@ -93,8 +93,8 @@ for (let attempt = 0; attempt < 4; attempt++) {
   break;
 }
 assert.ok(
-  xml.includes("nusa®") && xml.includes("Ide yang baik."),
-  "Company profile did not render",
+  xml.includes("SiServis-PC") && xml.includes("DASHBOARD SERVIS"),
+  "SiServis-PC dashboard did not render",
 );
 assert.ok(
   !xml.includes("Personal vault."),
@@ -103,8 +103,8 @@ assert.ok(
 await adb(["shell", "rm", "/data/local/tmp/nusa-release-ui.xml"]);
 await writeFile(
   "artifacts/release-smoke-results.txt",
-  `${new Date().toISOString()}\nPASS release APK SHA-256 and v2 signature verification\nPASS installation on Android API ${api} x86_64 emulator\nPASS launch and rendered company profile\nPASS vault remains locked without authentication\n${launch}\nEmulator System UI recovery: ${recoveredSystemUi}\n`,
+  `${new Date().toISOString()}\nPASS release APK SHA-256 and v2 signature verification\nPASS installation on Android API ${api} x86_64 emulator\nPASS launch and rendered SiServis-PC dashboard\nPASS vault remains locked without authentication\n${launch}\nEmulator System UI recovery: ${recoveredSystemUi}\n`,
 );
 console.log(
-  "PASS signed release APK: checksum, signature, installation, launch and locked company profile",
+  "PASS signed release APK: checksum, signature, installation, launch and locked SiServis-PC dashboard",
 );

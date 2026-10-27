@@ -27,6 +27,7 @@ const files = [
   "artifacts/nusa-vault-1.0.0.apk.sha256",
   `${apk}.sha256`,
   "artifacts/apk-signature.txt",
+  "artifacts/siservis-home.png",
   "artifacts/android-test-results.txt",
   "artifacts/container-test-results.txt",
   "artifacts/release-smoke-results.txt",

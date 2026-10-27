@@ -15,4 +15,5 @@
   <string name="parent_folder">↑ Folder induk</string>
   <string name="folder_name">▸ %1$s</string>
   <string name="sources_updated">Pengaturan diperbarui; salinan vault dan backup tetap ada.</string>
+  <string name="service_academic_discount">Diskon Civitas Akademika (10%)</string>
 </resources>

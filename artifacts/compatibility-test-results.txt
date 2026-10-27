@@ -1,4 +1,4 @@
-2026-10-24T05:17:32.712Z
+2026-10-27T06:15:29.124Z
 Production signed APK, Android API 26 x86_64 emulator. Matching release certificate; no custom TLS trust.
 INSTRUMENTATION_STATUS: stream=PASS AES-GCM round trip & randomized encryption
 
@@ -31,6 +31,6 @@ INSTRUMENTATION_RESULT: stream=PASS migration seed on original signed APK
 
 INSTRUMENTATION_CODE: -1
 
-INSTRUMENTATION_RESULT: stream=PASS signed 1.0.0 to 1.1.0 upgrade preserves password, v1 bytes, folder name and Keystore settings
+INSTRUMENTATION_RESULT: stream=PASS signed 1.0.0 to current release upgrade preserves password, v1 bytes, folder name and Keystore settings
 
 INSTRUMENTATION_CODE: -1

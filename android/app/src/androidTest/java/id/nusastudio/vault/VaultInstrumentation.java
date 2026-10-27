@@ -141,6 +141,38 @@ public final class VaultInstrumentation extends Instrumentation {
       VaultStore store = new VaultStore(context);
       String migration = arguments.getString("suite", "");
       String migrationId = "11111111-1111-4111-8111-111111111111";
+      if ("home-preview".equals(migration)) {
+        MainActivity preview =
+            (MainActivity)
+                startActivitySync(
+                    new Intent(context, MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        waitForIdleSync();
+        // Draw only the locked sample home view; production FLAG_SECURE stays enabled.
+        runOnMainSync(
+            () -> {
+              View view = preview.getWindow().getDecorView();
+              if (find(view, "SiServis-PC") == null || find(view, "Personal vault.") != null)
+                throw new AssertionError("Only the locked sample page may be captured");
+              android.graphics.Bitmap bitmap =
+                  android.graphics.Bitmap.createBitmap(
+                      view.getWidth(), view.getHeight(), android.graphics.Bitmap.Config.ARGB_8888);
+              view.draw(new android.graphics.Canvas(bitmap));
+              try (java.io.FileOutputStream out =
+                  new java.io.FileOutputStream(
+                      new java.io.File(context.getCacheDir(), "siservis-home.png"))) {
+                bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, out);
+              } catch (java.io.IOException e) {
+                throw new RuntimeException(e);
+              } finally {
+                bitmap.recycle();
+              }
+            });
+        result.putString(
+            "stream", "PASS locked SiServis preview captured without changing FLAG_SECURE\n");
+        finish(Activity.RESULT_OK, result);
+        return;
+      }
       if ("storage-revoked".equals(migration)) {
         require(!SharedStorage.allowed(context), "Revoked storage permission still allowed");
         boolean denied = false;
@@ -184,8 +216,8 @@ public final class VaultInstrumentation extends Instrumentation {
             "Upgrade lost Keystore settings");
         result.putString(
             "stream",
-            "PASS signed 1.0.0 to 1.1.0 upgrade preserves password, v1 bytes, folder name and"
-                + " Keystore settings\n");
+            "PASS signed 1.0.0 to current release upgrade preserves password, v1 bytes, folder name"
+                + " and Keystore settings\n");
         finish(Activity.RESULT_OK, result);
         return;
       }
@@ -599,14 +631,54 @@ public final class VaultInstrumentation extends Instrumentation {
             runOnMainSync(
                 () -> {
                   View root = activity.getWindow().getDecorView();
-                  if (find(root, "nusa®") == null || find(root, "Personal vault.") != null)
+                  if (find(root, "SiServis-PC") == null || find(root, "Personal vault.") != null)
                     throw new AssertionError("Vault terlihat saat terkunci");
                 });
           });
+      check(
+          "SiServis sample tracking and unknown ticket",
+          () ->
+              runOnMainSync(
+                  () -> {
+                    View root = activity.getWindow().getDecorView();
+                    find(root, "SRV-202610-001").performClick();
+                    if (find(root, "Lenovo ThinkPad T480") == null
+                        && find(root, "Laptop · Lenovo ThinkPad T480") == null)
+                      throw new AssertionError("Sample ticket details missing");
+                    EditText ticket = findInput(root);
+                    ticket.setText("not-a-ticket");
+                    find(root, "Periksa Status Pengerjaan").performClick();
+                    if (find(
+                            root,
+                            "Nomor tiket tidak ditemukan. Periksa kembali atau pilih contoh tiket.")
+                        == null) throw new AssertionError("Unknown ticket must show error");
+                  }));
+      check(
+          "SiServis calculator matches original discounted estimate",
+          () ->
+              runOnMainSync(
+                  () -> {
+                    View root = activity.getWindow().getDecorView();
+                    ((Spinner)
+                            root.findViewById(
+                                ((TextView) find(root, "Kategori Perangkat")).getLabelFor()))
+                        .setSelection(1);
+                    ((Spinner)
+                            root.findViewById(
+                                ((TextView) find(root, "Tingkat Kerusakan")).getLabelFor()))
+                        .setSelection(1);
+                    ((Spinner)
+                            root.findViewById(((TextView) find(root, "Suku Cadang")).getLabelFor()))
+                        .setSelection(1);
+                    ((CheckBox) find(root, "Diskon Civitas Akademika (10%)")).setChecked(true);
+                    find(root, "Hitung Estimasi Biaya & Waktu").performClick();
+                    if (find(root, "Rp 202.500") == null)
+                      throw new AssertionError("Incorrect discounted total");
+                  }));
       // Exercise the actual gesture, password dialog and vault UI.
       runOnMainSync(
           () -> {
-            View brand = find(activity.getWindow().getDecorView(), "nusa®");
+            View brand = find(activity.getWindow().getDecorView(), "SiServis-PC");
             for (int i = 0; i < 7; i++) brand.performClick();
           });
       waitForIdleSync();
@@ -640,7 +712,7 @@ public final class VaultInstrumentation extends Instrumentation {
             runOnMainSync(activity::lock);
             runOnMainSync(
                 () -> {
-                  if (find(activity.getWindow().getDecorView(), "nusa®") == null
+                  if (find(activity.getWindow().getDecorView(), "SiServis-PC") == null
                       || find(activity.getWindow().getDecorView(), "Personal vault.") != null)
                     throw new AssertionError("Vault belum terkunci");
                 });

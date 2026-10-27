@@ -151,39 +151,20 @@ public class MainActivity extends Activity {
   }
 
   private void showCompany() {
-    layout();
-    TextView logo = text("nusa®", 38);
-    logo.setContentDescription("Nusa Studio logo");
-    logo.setOnClickListener(
-        v -> {
-          long now = System.currentTimeMillis();
-          if (now - lastTap > 3000) taps = 0;
-          lastTap = now;
-          if (++taps == 7) {
-            taps = 0;
-            askPassword();
-          }
-        });
-    space();
-    text("INDEPENDENT DIGITAL STUDIO", 11);
-    text("Ide yang baik.\nHasil yang berarti.", 42);
-    text(
-        "Kami membantu bisnis bertumbuh melalui desain yang penuh pertimbangan dan teknologi yang"
-            + " tepat.",
-        17);
-    space();
-    text("Tentang Nusa", 12);
-    text("Partner kecil untuk langkah besar Anda.", 28);
-    text(
-        "Kami merangkai strategi, identitas visual, dan pengalaman digital untuk membantu cerita"
-            + " Anda sampai ke orang yang tepat.",
-        16);
-    space();
-    text("Layanan kami", 25);
-    text("01   Identitas merek\n\n02   Pengalaman digital\n\n03   Strategi kreatif", 19);
-    space();
-    text("Kontak\nhello@nusa.example", 16);
-    text("© 2026 Nusa Studio\nDibuat dengan perhatian.", 12);
+    taps = 0;
+    setContentView(
+        new ServiceHome(
+                this,
+                () -> {
+                  long now = System.currentTimeMillis();
+                  if (now - lastTap > 3000) taps = 0;
+                  lastTap = now;
+                  if (++taps == 7) {
+                    taps = 0;
+                    askPassword();
+                  }
+                })
+            .create());
   }
 
   void lock() {

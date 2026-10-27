@@ -207,7 +207,7 @@ try {
     "https://localhost:3443",
     "id.nusastudio.vault.test/id.nusastudio.vault.VaultInstrumentation",
   ]);
-  assert.match(result, /Tests passed: 21/);
+  assert.match(result, /Tests passed: 23/);
   assert.doesNotMatch(result, /FAIL |INSTRUMENTATION_FAILED|Process crashed/);
   // Revocation intentionally kills the app on Android. Do it after the first
   // instrumentation process exits, then verify refusal in a fresh process.

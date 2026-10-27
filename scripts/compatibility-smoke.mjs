@@ -132,7 +132,7 @@ try {
     "migration-verify",
     "id.nusastudio.vault.test/id.nusastudio.vault.VaultInstrumentation",
   ]);
-  assert.match(migration, /PASS signed 1.0.0 to 1.1.0 upgrade/);
+  assert.match(migration, /PASS signed 1.0.0 to current release upgrade/);
   assert.doesNotMatch(
     migration,
     /FAIL |Process crashed|INSTRUMENTATION_FAILED/,
